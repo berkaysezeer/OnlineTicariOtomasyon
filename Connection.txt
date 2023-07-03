@@ -1,0 +1,2 @@
+Masaüstü - localhost\SQLEXPRESS
+Laptop - localhost\MSSQLSERVER01
