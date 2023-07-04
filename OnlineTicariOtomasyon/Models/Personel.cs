@@ -21,8 +21,9 @@ namespace OnlineTicariOtomasyon.Models
 
         [Column(TypeName = "Varchar")]
         [StringLength(255)]
-        public string UrunGorsel { get; set; }
+        public string Gorsel { get; set; }
         public ICollection<SatisHareket> SatisHarekets { get; set; }
-        public Departman Departman { get; set; }
+        public int DepartmanId { get; set; }
+        public virtual Departman Departman { get; set; }
     }
 }

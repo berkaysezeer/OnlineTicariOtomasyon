@@ -1,0 +1,54 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model List<Personel>
+@{
+    ViewBag.Title = "Detay";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">@ViewBag.DepartmanAdi</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Departman/Index">Departlamanlar</a></li>
+        <li class="breadcrumb-item active">@ViewBag.DepartmanAdi</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Personel Listesi</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ad</th>
+                            <th>Soyad</th>
+                            <th>Görsel</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ad</th>
+                            <th>Soyad</th>
+                            <th>Görsel</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var personel in Model)
+                        {
+                            <tr>
+                                <td>@personel.Id</td>
+                                <td>@personel.Ad</td>
+                                <td>@personel.Soyad</td>
+                                <td></td>
+                                <td><a href="/Departman/PersonelSatis/@personel.Id" class="btn btn-info">Satışlar</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @*<div class="form-group mt-4 mb-0"><a class="btn btn-primary" href="/Personel/Ekle/@Model.Id">Yeni Personel Ekle</a></div>*@
+</div>

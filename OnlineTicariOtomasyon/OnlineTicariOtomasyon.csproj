@@ -127,8 +127,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DepartmanController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KategoriController.cs" />
+    <Compile Include="Controllers\UrunController.cs" />
+    <Compile Include="Functions\DropdownListItems.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -141,6 +144,7 @@
     <Compile Include="Models\FaturaKalem.cs" />
     <Compile Include="Models\Gider.cs" />
     <Compile Include="Models\Kategori.cs" />
+    <Compile Include="Models\Marka.cs" />
     <Compile Include="Models\Personel.cs" />
     <Compile Include="Models\SatisHareket.cs" />
     <Compile Include="Models\Urun.cs" />
@@ -268,9 +272,18 @@
     <Content Include="Views\Kategori\Index.cshtml" />
     <Content Include="Views\Kategori\Ekle.cshtml" />
     <Content Include="Views\Kategori\Duzenle.cshtml" />
+    <Content Include="Views\Urun\Index.cshtml" />
+    <Content Include="Views\Urun\Ekle.cshtml" />
+    <Content Include="Views\Urun\Duzenle.cshtml" />
+    <Content Include="Views\Departman\Index.cshtml" />
+    <Content Include="Views\Departman\Ekle.cshtml" />
+    <Content Include="Views\Departman\Duzenle.cshtml" />
+    <Content Include="Views\Departman\Detay.cshtml" />
+    <Content Include="Views\Departman\PersonelSatis.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Marka\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

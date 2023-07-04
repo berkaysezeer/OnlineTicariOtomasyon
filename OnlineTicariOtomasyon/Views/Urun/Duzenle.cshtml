@@ -1,0 +1,70 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model Urun
+@{
+    ViewBag.Title = "Ürün Düzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Ürün Düzenle</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Urun/Index">Ürün Düzenle</a></li>
+        <li class="breadcrumb-item active">Ürün Düzenle</li>
+    </ol>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-table mr-1"></i>@Model.Ad</div>
+                <div class="card-body">
+
+                    @using (Html.BeginForm("Duzenle", "Urun", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(x => x.Id)
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.Ad, "Ürün Adı", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.Ad, new { @class = "form-control py-3" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.MarkaId, "Marka", new { @class = "small mb-1" })
+                                @Html.DropDownList("MarkaId", (IEnumerable<SelectListItem>)ViewBag.MarkaListesi, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.KategoriId, "Kategori", new { @class = "small mb-1" })
+
+                                @Html.DropDownList("KategoriId", (IEnumerable<SelectListItem>)ViewBag.KategoriListesi, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.AlisFiyati, "Alış Fiyatı", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.AlisFiyati, new { type = "number", min = "0", step = "1", Value = Convert.ToInt32(Model.AlisFiyati), @class = "form-control py-3" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.SatisFiyati, "Satış Fiyatı", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.SatisFiyati, new { type = "number", min = "0", step = "1", Value = Convert.ToInt32(Model.SatisFiyati), @class = "form-control py-3" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.Stok, "Stok", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.Stok, new { type = "number", min = "0", step = "1", @class = "form-control py-3" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(x => x.UrunGorsel, "Görsel", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.UrunGorsel, new { @class = "form-control py-3" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group mt-4 mb-0">
+                                    <button class="btn btn-primary btn-block" type="submit">Ekle</button>
+                                </div>
+                            </div>
+                        </div>}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

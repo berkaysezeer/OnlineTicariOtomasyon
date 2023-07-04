@@ -35,12 +35,14 @@ namespace OnlineTicariOtomasyon.Controllers
                 db.Kategoris.Add(kategori);
                 db.SaveChanges();
 
+                TempData["Success"] = $"{kategori.Ad} başarıyla eklendi";
+
                 return RedirectToAction("Index", "Kategori");
             }
             else return View();
         }
 
-       
+
         public ActionResult Sil(int Id)
         {
             var kategori = db.Kategoris.FirstOrDefault(x => x.Id == Id);
@@ -49,6 +51,8 @@ namespace OnlineTicariOtomasyon.Controllers
             {
                 kategori.Sil = true;
                 db.SaveChanges();
+
+                TempData["Success"] = $"{kategori.Ad} başarıyla silindi";
             }
 
             return RedirectToAction("Index");
@@ -67,10 +71,12 @@ namespace OnlineTicariOtomasyon.Controllers
         {
             var kategori = db.Kategoris.FirstOrDefault(x => x.Id == k.Id);
 
-            if(kategori != null)
+            if (kategori != null)
             {
                 kategori.Ad = k.Ad;
                 db.SaveChanges();
+
+                TempData["Success"] = $"{kategori.Ad} başarıyla düzenlendi";
             }
 
             return RedirectToAction("Index");

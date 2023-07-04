@@ -1,13 +1,15 @@
 ﻿@using OnlineTicariOtomasyon.Models
-@model List<Kategori>
-@{ ViewBag.Title = "Kategoriler";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
+@model  List<Departman> 
+@{
+    ViewBag.Title = "Departmanlar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 
 <div class="container-fluid">
-    <h1 class="mt-4">Kategoriler</h1>
+    <h1 class="mt-4">Departmanlar</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/Kategori/Index">Kategori</a></li>
-        <li class="breadcrumb-item active">Kategoriler</li>
+        <li class="breadcrumb-item"><a href="/Departman/Index">Departmanlar</a></li>
+        <li class="breadcrumb-item active">Departmanlar</li>
     </ol>
     @if (TempData["Success"] != null)
     {
@@ -18,14 +20,14 @@
     </button>
 </div>}
     <div class="card mb-4">
-        <div class="card-header"><i class="fas fa-table mr-1"></i>Kategori Listesi</div>
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Departman Listesi</div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Kategori Adı</th>
+                            <th>Departman Adı</th>
                             <th>İşlemler</th>
                         </tr>
                     </thead>
@@ -36,21 +38,22 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        @foreach (var kategori in Model)
+                        @foreach (var departman in Model)
                         {
             <tr>
-                <td>@kategori.Id</td>
-                <td>@kategori.Ad</td>
+                <td>@departman.Id</td>
+                <td>@departman.Ad</td>
                 <td>
-                    <a href="/Kategori/Duzenle/@kategori.Id" class="btn btn-primary">Düzenle</a>
-                    <a href="/Kategori/Sil/@kategori.Id" class="btn btn-danger">Sil</a>
+                    <a href="/Departman/Detay/@departman.Id" class="btn btn-info">Detaylar</a>
+                    <a href="/Departman/Duzenle/@departman.Id" class="btn btn-primary">Düzenle</a>
+                    <a href="/Departman/Sil/@departman.Id" class="btn btn-danger">Sil</a>
                 </td>
-            </tr>
-}
+            </tr>}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <div class="form-group mt-4 mb-0"><a class="btn btn-primary" href="/Kategori/Ekle">Yeni Kategori Ekle</a></div>
+    <div class="form-group mt-4 mb-0"><a class="btn btn-primary" href="/Departman/Ekle">Yeni Departman Ekle</a></div>
 </div>
+

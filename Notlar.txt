@@ -1,0 +1,2 @@
+Code Firs ile model oluştururken Required kullanma
+İlişkilerde virtual kullanmayı unutma. Yoksa ilişkili tablodan değerlere erişemezsin

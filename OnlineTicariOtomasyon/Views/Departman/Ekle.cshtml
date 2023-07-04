@@ -1,41 +1,41 @@
 ﻿@using OnlineTicariOtomasyon.Models
-@model Kategori
+@model Departman
 @{
-    ViewBag.Title = "Kategori Düzenle";
+    ViewBag.Title = "Departman Ekle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="container-fluid">
-    <h1 class="mt-4">Kategori Düzenle</h1>
+    <h1 class="mt-4">Yeni Departman Ekle</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/Kategori/Index">Kategori</a></li>
-        <li class="breadcrumb-item active">Kategori Düzenle</li>
+        <li class="breadcrumb-item"><a href="/Departman/Index">Departman</a></li>
+        <li class="breadcrumb-item active">Yeni Departman Ekle</li>
     </ol>
     <div class="row">
         <div class="col-md-4">
             <div class="card mb-4">
-                <div class="card-header"><i class="fas fa-table mr-1"></i>@Model.Ad</div>
+                <div class="card-header"><i class="fas fa-table mr-1"></i>Departman</div>
                 <div class="card-body">
-                    @Html.HiddenFor(x => x.Id)
-                    @using (Html.BeginForm("Duzenle", "Kategori", FormMethod.Post))
+
+                    @using (Html.BeginForm("Ekle", "Departman", FormMethod.Post))
                     {
                         <div class="form-row">
                             <div class="col-md-12">
-                                @Html.LabelFor(x => x.Ad, "Kategori Adı", new { @class = "small mb-1" })
+                                @Html.LabelFor(x => x.Ad, "Departman Adı", new { @class = "small mb-1" })
                                 @Html.TextBoxFor(x => x.Ad, new { @class = "form-control py-3" })
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group mt-4 mb-0">
-                                    <button class="btn btn-primary btn-block" type="submit">Kaydet</button>
+                                    <button class="btn btn-primary btn-block" type="submit">Ekle</button>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        </div>}
 
                 </div>
             </div>
         </div>
     </div>
+
 </div>
