@@ -91,8 +91,7 @@ namespace OnlineTicariOtomasyon.Controllers
         [HttpGet]
         public ActionResult PersonelSatis(int Id)
         {
-            var personel = db.Personels.Where(x => x.Id == Id).FirstOrDefault();
-            ViewBag.PersonelBilgisi = $"{personel.Ad} {personel.Soyad}";
+            ViewBag.PersonelBilgisi = db.Personels.Where(x => x.Id == Id).Select(x => x.Ad + " " + x.Soyad).FirstOrDefault();
 
             var personelSatislari = db.SatisHarekets.Where(x => x.PersonelId == Id).OrderByDescending(x => x.Tarih).ToList();
             return View(personelSatislari);
