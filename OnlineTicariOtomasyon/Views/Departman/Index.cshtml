@@ -11,10 +11,10 @@
         <li class="breadcrumb-item"><a href="/Departman/Index">Departmanlar</a></li>
         <li class="breadcrumb-item active">Departmanlar</li>
     </ol>
-    @if (TempData["Success"] != null)
+    @if (TempData["DepartmanSuccess"] != null)
     {
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-    @TempData["Success"].ToString()
+    @TempData["DepartmanSuccess"].ToString()
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>

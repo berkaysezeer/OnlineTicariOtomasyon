@@ -1,7 +1,5 @@
 ﻿
-@{
-    Layout = null;
-}
+@{ Layout = null; }
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,8 +12,10 @@
     <title>Ticari Otomasyon</title>
     <link href="~/Web/dist/css/styles.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.js"></script>
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -53,15 +53,28 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
                             Kategoriler
                         </a>
-                        <a class="nav-link" href="/Urun">
-                            <div class="sb-nav-link-icon"><i class="fas fa-inbox"></i></div>
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#urun" aria-expanded="false" aria-controls="urun">
+                            <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
                             Ürünler
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
+                        <div class="collapse" id="urun" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link" href="/Urun">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-inbox"></i></div>
+                                    Ürünler
+                                </a>
+                                <a class="nav-link" href="/Galeri">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-inbox"></i></div>
+                                    Ürün Görselleri
+                                </a>
+                            </nav>
+                        </div>
                         <a class="nav-link" href="/Departman">
                             <div class="sb-nav-link-icon"><i class="fas fa-list-alt"></i></div>
                             Departmanlar
                         </a>
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="/Cari">
                             <div class="sb-nav-link-icon"><i class="fas fa-file"></i></div>
                             Cariler
                         </a>
@@ -97,7 +110,11 @@
                             </nav>
                         </div>
                         <div class="sb-sidenav-menu-heading">Rapor</div>
-                        <a class="nav-link" href="charts.html">
+                        <a class="nav-link" href="/Satis">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Satışlar
+                        </a>
+                        <a class="nav-link" href="/Fatura">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Faturalar
                         </a>
@@ -140,7 +157,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="~/Web/dist/js/scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>*@
     <script src="~/Web/dist/assets/demo/chart-area-demo.js"></script>
     <script src="~/Web/dist/assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>

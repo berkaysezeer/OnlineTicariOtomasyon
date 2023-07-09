@@ -35,7 +35,7 @@ namespace OnlineTicariOtomasyon.Controllers
                 db.Kategoris.Add(kategori);
                 db.SaveChanges();
 
-                TempData["Success"] = $"{kategori.Ad} başarıyla eklendi";
+                TempData["KategoriSuccess"] = $"{kategori.Ad} başarıyla eklendi";
 
                 return RedirectToAction("Index", "Kategori");
             }
@@ -52,7 +52,7 @@ namespace OnlineTicariOtomasyon.Controllers
                 kategori.Sil = true;
                 db.SaveChanges();
 
-                TempData["Success"] = $"{kategori.Ad} başarıyla silindi";
+                TempData["KategoriSuccess"] = $"{kategori.Ad} başarıyla silindi";
             }
 
             return RedirectToAction("Index");
@@ -76,7 +76,7 @@ namespace OnlineTicariOtomasyon.Controllers
                 kategori.Ad = k.Ad;
                 db.SaveChanges();
 
-                TempData["Success"] = $"{kategori.Ad} başarıyla düzenlendi";
+                TempData["KategoriSuccess"] = $"{kategori.Ad} başarıyla düzenlendi";
             }
 
             return RedirectToAction("Index");

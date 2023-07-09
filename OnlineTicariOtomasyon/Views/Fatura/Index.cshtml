@@ -1,0 +1,68 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model List<Fatura>
+@{
+    ViewBag.Title = "Faturalar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Faturalar</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Fatura/Index">Fatura</a></li>
+        <li class="breadcrumb-item active">Faturalar</li>
+    </ol>
+    @if (TempData["FaturaSuccess"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["FaturaSuccess"].ToString()
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>}
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Fatura Listesi</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Seri No</th>
+                            <th>Sıra No</th>
+                            <th>Toplam Tutar</th>
+                            <th>Vergi Daires</th>
+                            <th>Vergi Numarası</th>
+                            <th>Teslim Eden</th>
+                            <th>Teslim Alan</th>
+                            <th>Tarih</th>
+                            <th>Saat</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var fatura in Model)
+                        {
+                            <tr>
+                                <td>@fatura.Id</td>
+                                <td>@fatura.SeriNo</td>
+                                <td>@fatura.SiraNo</td>
+                                <td></td>
+                                <td>@fatura.VergiDairesi</td>
+                                <td>@fatura.VergiDairesi</td>
+                                <td>@fatura.TeslimEden</td>
+                                <td>@fatura.TeslimAlan</td>
+                                <td>@fatura.Tarih.ToString("dd.MM.yyy")</td>
+                                <td>@fatura.Saat</td>
+                                <td>
+                                    <a href="/Fatura/Detay/@fatura.Id" class="btn btn-outline-info">Detay</a>
+                                    <a href="/Fatura/Duzenle/@fatura.Id" class="btn btn-primary">Düzenle</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-4 mb-0"><a class="btn btn-primary" href="/Fatura/Ekle">Yeni Fatura Oluştur</a></div>
+</div>

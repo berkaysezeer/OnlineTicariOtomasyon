@@ -1,9 +1,7 @@
 ﻿@using OnlineTicariOtomasyon.Models
 @model List<Urun>
-@{
-    ViewBag.Title = "Ürünler";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+@{ ViewBag.Title = "Ürünler";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
 
 <div class="container-fluid">
     <h1 class="mt-4">Ürünler</h1>
@@ -11,14 +9,14 @@
         <li class="breadcrumb-item"><a href="/Urun/Index">Ürünler</a></li>
         <li class="breadcrumb-item active">Ürünler</li>
     </ol>
-    @if (TempData["Success"] != null)
+    @if (TempData["UrunSuccess"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @TempData["Success"].ToString()
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    @TempData["UrunSuccess"].ToString()
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>}
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>Ürün Listesi</div>
         <div class="card-body">
@@ -33,45 +31,30 @@
                             <th>Alış Fiyatı</th>
                             <th>Satış Fiyatı</th>
                             <th>Stok</th>
-                            <th>Görsel</th>
                             <th>İşlemler</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>ID</th>
-                            <th>Ürün Adı</th>
-                            <th>Kategori</th>
-                            <th>Marka</th>
-                            <th>Alış Fiyatı</th>
-                            <th>Satış Fiyatı</th>
-                            <th>Stok</th>
-                            <th>Görsel</th>
-                            <th>İşlemler</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @foreach (var urun in Model)
                         {
-                            <tr>
-                                <td>@urun.Id</td>
-                                <td>@urun.Ad</td>
-                                <td>@urun.Kategori.Ad</td>
-                                <td>@urun.Marka.Ad</td>
-                                <td>@Convert.ToInt32(urun.AlisFiyati)</td>
-                                <td>@Convert.ToInt32(urun.SatisFiyati)</td>
-                                <td>
-                                    <span class="badge badge-@(urun.Stok <= 20 ? "danger" : urun.Stok >= 21 &&  urun.Stok < 100 ? "primary" : "success")">
-                                        @urun.Stok
-                                    </span>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <a href="/Urun/Duzenle/@urun.Id" class="btn btn-primary">Düzenle</a>
-                                    <a href="/Urun/Sil/@urun.Id" class="btn btn-danger">Sil</a>
-                                </td>
-                            </tr>
-                        }
+            <tr>
+                <td>@urun.Id</td>
+                <td><a data-fancybox="gallery" target="_blank" href="@urun.UrunGorsel">@urun.Ad</a></td>
+                <td>@urun.Kategori.Ad</td>
+                <td>@urun.Marka.Ad</td>
+                <td>@Convert.ToInt32(urun.AlisFiyati)</td>
+                <td>@Convert.ToInt32(urun.SatisFiyati)</td>
+                <td>
+                    <span class="badge badge-@(urun.Stok <= 20 ? "danger" : urun.Stok >= 21 &&  urun.Stok < 100 ? "primary" : "success")">
+                        @urun.Stok
+                    </span>
+                </td>
+                <td>
+                    <a href="/UrunDetay/Index/@urun.Id" class="btn btn-info">Detay</a>
+                    <a href="/Urun/Duzenle/@urun.Id" class="btn btn-primary">Düzenle</a>
+                    <a href="/Urun/Sil/@urun.Id" class="btn btn-danger">Sil</a>
+                </td>
+            </tr>}
                     </tbody>
                 </table>
             </div>

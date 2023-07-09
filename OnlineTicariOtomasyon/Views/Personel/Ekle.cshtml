@@ -1,0 +1,57 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model Personel
+@{
+    ViewBag.Title = "Personel Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Yeni Personel Ekle</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Personel/Index">Personel</a></li>
+        <li class="breadcrumb-item active">Yeni Personel Ekle</li>
+    </ol>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-table mr-1"></i>Personel</div>
+                <div class="card-body">
+
+                    @using (Html.BeginForm("Ekle", "Personel", FormMethod.Post))
+                    {
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.Ad, "Ad", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.Ad, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.Ad, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.Soyad, "Soyad", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.Soyad, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.Soyad, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.DepartmanId, "Departman", new { @class = "small mb-1" })
+                                @Html.DropDownList("DepartmanId", (IEnumerable<SelectListItem>)ViewBag.DepartmanListesi, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(x => x.Gorsel, "Görsel", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.Gorsel, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.Gorsel, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group mt-4 mb-0">
+                                    <button class="btn btn-primary btn-block" type="submit">Ekle</button>
+                                </div>
+                            </div>
+                        </div>}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

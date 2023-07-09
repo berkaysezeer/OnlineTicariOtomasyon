@@ -12,18 +12,27 @@ namespace OnlineTicariOtomasyon.Models
         public int Id { get; set; }
 
         [Column(TypeName = "Varchar")]
-        [StringLength(30)]
+        [StringLength(30, ErrorMessage = "En fazla 30 karakter girebilirsiniz")]
+        [Required(ErrorMessage = "Bu alanı boş geçemezsiniz")]
         public string Ad { get; set; }
 
         [Column(TypeName = "Varchar")]
-        [StringLength(30)]
+        [StringLength(30, ErrorMessage = "En fazla 30 karakter girebilirsiniz")]
+        [Required(ErrorMessage = "Bu alanı boş geçemezsiniz")]
         public string Soyad { get; set; }
 
         [Column(TypeName = "Varchar")]
-        [StringLength(255)]
+        [StringLength(255, ErrorMessage = "En fazla 255 karakter girebilirsiniz")]
         public string Gorsel { get; set; }
         public ICollection<SatisHareket> SatisHarekets { get; set; }
         public int DepartmanId { get; set; }
         public virtual Departman Departman { get; set; }
+
+        public bool Sil { get; set; }
+
+        public Personel()
+        {
+            Sil = false;
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace OnlineTicariOtomasyon.Controllers
             {
                 db.Departmans.Add(departman);
                 db.SaveChanges();
-                TempData["Success"] = $"{departman.Ad} departmanı başarıyla eklendi";
+                TempData["DepartmanSuccess"] = $"{departman.Ad} departmanı başarıyla eklendi";
 
                 return RedirectToAction("Index");
             }
@@ -46,7 +46,7 @@ namespace OnlineTicariOtomasyon.Controllers
                 departman.Sil = true;
                 db.SaveChanges();
 
-                TempData["Success"] = $"{departman.Ad} departmanı başarıyla silindi";
+                TempData["DepartmanSuccess"] = $"{departman.Ad} departmanı başarıyla silindi";
             }
 
             return RedirectToAction("Index");
@@ -71,7 +71,7 @@ namespace OnlineTicariOtomasyon.Controllers
                 departman.Ad = d.Ad;
                 db.SaveChanges();
 
-                TempData["Success"] = $"{departman.Ad} departmanı başarıyla düzenlendi";
+                TempData["DepartmanSuccess"] = $"{departman.Ad} departmanı başarıyla düzenlendi";
 
                 return RedirectToAction("Index");
             }
@@ -91,7 +91,8 @@ namespace OnlineTicariOtomasyon.Controllers
         [HttpGet]
         public ActionResult PersonelSatis(int Id)
         {
-            ViewBag.PersonelBilgisi = db.Personels.Where(x => x.Id == Id).Select(x => x.Ad + " " + x.Soyad).FirstOrDefault();
+            var personel = db.Personels.Where(x => x.Id == Id).FirstOrDefault();
+            ViewBag.PersonelBilgisi = $"{personel.Ad} {personel.Soyad}";
 
             var personelSatislari = db.SatisHarekets.Where(x => x.PersonelId == Id).OrderByDescending(x => x.Tarih).ToList();
             return View(personelSatislari);

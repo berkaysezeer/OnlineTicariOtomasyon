@@ -1,0 +1,56 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model List<Urun>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Responsive Hover Table</h3>
+
+        <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body table-responsive p-0">
+        <table class="table table-hover text-nowrap">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ürün Adı</th>
+                    <th>Marka</th>
+                    <th>Kategori</th>
+                    <th>Alış Fiyatı</th>
+                    <th>Satış Fiyatı</th>
+                    <th>Stok</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var urun in Model)
+                {
+        <tr>
+            <td>@urun.Id</td>
+            <td><a data-fancybox="gallery" target="_blank" href="@urun.UrunGorsel">@urun.Ad</a></td>
+            <td>@urun.Kategori.Ad</td>
+            <td>@urun.Marka.Ad</td>
+            <td>@Convert.ToInt32(urun.AlisFiyati)</td>
+            <td>@Convert.ToInt32(urun.SatisFiyati)</td>
+            <td>
+                <span class="badge badge-@(urun.Stok <= 20 ? "danger" : urun.Stok >= 21 &&  urun.Stok < 100 ? "primary" : "success")">
+                    @urun.Stok
+                </span>
+            </td>
+            <td>
+                <a href="/UrunDetay/Index/@urun.Id" class="btn btn-info">Detay</a>
+                <a href="/Urun/Duzenle/@urun.Id" class="btn btn-primary">Düzenle</a>
+                <a href="/Urun/Sil/@urun.Id" class="btn btn-danger">Sil</a>
+            </td>
+        </tr>
+}
+            </tbody>
+        </table>
+    </div>
+</div>

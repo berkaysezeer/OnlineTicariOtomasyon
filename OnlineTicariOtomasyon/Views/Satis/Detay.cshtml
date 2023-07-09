@@ -1,0 +1,66 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model SatisHareket
+@{
+    ViewBag.Title = "Detay";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">@Model.Urun.Ad Satış Detayı</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Satis/Index">Satışlar</a></li>
+        <li class="breadcrumb-item active">Satış Detay</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>@Model.Urun.Ad Satış Detayı</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ürün</th>
+                            <th>Personel</th>
+                            <th>Cari</th>
+                            <th>Tutar</th>
+                            <th>Toplam Tutar</th>
+                            <th>Adet</th>
+                            <th>Tarih</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ürün</th>
+                            <th>Personel</th>
+                            <th>Cari</th>
+                            <th>Tutar</th>
+                            <th>Toplam Tutar</th>
+                            <th>Adet</th>
+                            <th>Tarih</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td>@Model.Id</td>
+                            <td>@Model.Urun.Ad</td>
+                            <td>@(Model.Personel.Ad + " " + Model.Personel.Soyad)</td>
+                            <td>@(Model.Cari.Ad + " "+ Model.Cari.Soyad)</td>
+                            <td>₺@Convert.ToInt32(Model.Tutar)</td>
+                            <td>₺@Convert.ToInt32(Model.ToplamTutar)</td>
+                            <td>@Model.Adet</td>
+                            <td>@Model.Tarih.ToString("dd.MM.yyyy")</td>
+                            <td><a href="/Satis/Detay/@Model.Id" class="btn btn-outline-primary">Yazdır</a></td>
+                        </tr>}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @*<div class="form-group mt-4 mb-0"><a class="btn btn-primary" href="/Personel/Ekle/@Model.Id">Yeni Personel Ekle</a></div>*@
+</div>
+
+
+

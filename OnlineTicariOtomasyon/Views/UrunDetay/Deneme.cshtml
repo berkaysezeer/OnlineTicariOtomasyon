@@ -1,0 +1,22 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model ViewModel
+@{
+    ViewBag.Title = "Deneme";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="container-fluid">
+    @foreach (var urun in Model.Uruns)
+    {
+        <p>@urun.Ad</p>
+        <br />
+    }
+    <hr />
+    @foreach (var marka in Model.Markas)
+    {
+        <p>@marka.Ad</p>
+        <br />
+    }
+</div>

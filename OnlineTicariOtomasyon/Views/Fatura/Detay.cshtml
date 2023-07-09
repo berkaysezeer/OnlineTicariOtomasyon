@@ -1,0 +1,66 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model List<FaturaKalem>
+@{
+    ViewBag.Title = "Fatura Detayı";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">@ViewBag.FaturaNo Numaralı Fatura Detayı</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Fatura/Index">Faturalar</a></li>
+        <li class="breadcrumb-item active">Fatura Detayı</li>
+    </ol>
+    @if (TempData["FaturaKalemSuccess"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["FaturaKalemSuccess"].ToString()
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>}
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Fatura Kalemleri</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="tblFaturaKalem" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Açıklama</th>
+                            <th>Birim Fiyat</th>
+                            <th>Tutar</th>
+                            <th>Adet</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var kalem in Model)
+                        {
+                            <tr>
+                                <td>@kalem.Id</td>
+                                <td>@kalem.Aciklama</td>
+                                <td>₺@Convert.ToInt32(kalem.BirimFiyat)</td>
+                                <td>₺@Convert.ToInt32(kalem.Tutar)</td>
+                                <td>@kalem.Adet</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <a href="/Fatura/KalemEkle/@ViewBag.FaturaNo" class="btn btn-primary">Yeni Kalem Ekle</a>
+</div>
+
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<script>
+
+    $('#tblFaturaKalem').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+        }
+    });
+
+</script>

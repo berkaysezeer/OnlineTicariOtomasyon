@@ -1,0 +1,4 @@
+1- Export data from datatable
+2- Datatable ürün görselleri gösterme
+3- SatisHareket-FaturaKalem-Fatura birbirine bağlanacak: her satış hareket bir faturanın kalemi olabilecek
+4- Görseller bulut sunucuda tutulacak

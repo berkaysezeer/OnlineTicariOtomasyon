@@ -1,0 +1,73 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model SatisHareket
+@{
+    ViewBag.Title = "Satış Düzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <h1 class="mt-4">@ViewBag.UrunAdi Satışı Düzenle</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Satis/Index">Satış</a></li>
+        <li class="breadcrumb-item active">Satış Düzenle</li>
+    </ol>
+    @if (TempData["SatisDuzenleDanger"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["SatisDuzenleDanger"].ToString()
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-table mr-1"></i>Satış Düzenle</div>
+                <div class="card-body">
+
+                    @using (Html.BeginForm("Duzenle", "Satis", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(x => x.Tarih, new { id = "Tarih", Value = DateTime.Now })
+                        @Html.HiddenFor(x=>x.Id)
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                @Html.Label("Kategori", new { @class = "small mb-1" })
+                                @Html.DropDownList("KategoriId", (IEnumerable<SelectListItem>)ViewBag.KategoriListesi, "Seçiniz", new { @class = "form-control" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.UrunId, "Ürün", new { @class = "small mb-1" })
+                                @Html.DropDownList("UrunId", (IEnumerable<SelectListItem>)ViewBag.UrunListesi, "Seçiniz", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.UrunId, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.Adet, "Adet", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(m => m.Adet, new { type = "number", min = "1", step = "1", @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.Adet, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(x => x.PersonelId, "Personel", new { @class = "small mb-1" })
+                                @Html.DropDownList("PersonelId", (IEnumerable<SelectListItem>)ViewBag.PersonelListesi, "Seçiniz", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.PersonelId, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(x => x.CariId, "Cari", new { @class = "small mb-1" })
+                                @Html.DropDownList("CariId", (IEnumerable<SelectListItem>)ViewBag.CariListesi, "Seçiniz", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.CariId, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group mt-4 mb-0">
+                                    <button class="btn btn-primary btn-block" type="submit">Kaydet</button>
+                                </div>
+                            </div>
+                        </div>}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

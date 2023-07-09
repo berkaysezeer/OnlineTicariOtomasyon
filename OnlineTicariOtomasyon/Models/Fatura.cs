@@ -29,13 +29,21 @@ namespace OnlineTicariOtomasyon.Models
 
         [Column(TypeName = "Varchar")]
         [StringLength(30)]
+
         public string TeslimEden { get; set; }
         [Column(TypeName = "Varchar")]
         [StringLength(30)]
 
         public string TeslimAlan { get; set; }
+
+        public decimal ToplamTutar { get; set; }
+
         public DateTime Tarih { get; set; }
-        public DateTime Saat { get; set; }
+
+        [Column(TypeName = "Char")]
+        [StringLength(5)]
+        public string Saat { get; set; }
+
         public ICollection<FaturaKalem> FaturaKalems { get; set; }
     }
 }

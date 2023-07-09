@@ -14,6 +14,14 @@ namespace OnlineTicariOtomasyon.Models
         [Column(TypeName = "Varchar")]
         [StringLength(30)]
         public string Ad { get; set; }
+
+        public bool Sil { get; set; }
+
+        public Marka()
+        {
+            Sil = false;
+        }
+
         public ICollection<Urun> Uruns { get; set; }
     }
 }

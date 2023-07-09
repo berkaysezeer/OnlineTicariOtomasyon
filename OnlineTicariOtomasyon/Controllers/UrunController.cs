@@ -30,7 +30,7 @@ namespace OnlineTicariOtomasyon.Controllers
         {
             db.Uruns.Add(urun);
             db.SaveChanges();
-            TempData["Success"] = $"{urun.Ad} başarıyla eklendi";
+            TempData["UrunSuccess"] = $"{urun.Ad} başarıyla eklendi";
             return RedirectToAction("Index");
         }
 
@@ -43,7 +43,7 @@ namespace OnlineTicariOtomasyon.Controllers
                 urun.Sil = true;
                 db.SaveChanges();
 
-                TempData["Success"] = $"{urun.Ad} başarıyla silindi";
+                TempData["UrunSuccess"] = $"{urun.Ad} başarıyla silindi";
             }
 
             return RedirectToAction("Index");
@@ -80,7 +80,7 @@ namespace OnlineTicariOtomasyon.Controllers
 
                 db.SaveChanges();
 
-                TempData["Success"] = $"{urun.Ad} başarıyla düzenlendi";
+                TempData["UrunSuccess"] = $"{urun.Ad} başarıyla düzenlendi";
 
                 return RedirectToAction("Index");
             }

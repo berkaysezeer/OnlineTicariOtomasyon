@@ -14,6 +14,10 @@ namespace OnlineTicariOtomasyon.Models
         [StringLength(100)]
         public string Ad { get; set; }
 
+        [Column(TypeName = "Varchar")]
+        [StringLength(200)]
+        public string Aciklama { get; set; }
+
         public short Stok { get; set; }
         public decimal AlisFiyati { get; set; }
         public decimal SatisFiyati { get; set; }

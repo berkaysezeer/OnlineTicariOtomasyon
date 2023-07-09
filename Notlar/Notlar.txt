@@ -1,0 +1,12 @@
+Code Firs ile model oluştururken Required kullanma
+İlişkilerde virtual kullanmayı unutma. Yoksa ilişkili tablodan değerlere erişemezsin
+
+//Lamda ile anonim tip kullanımı
+        public PartialViewResult PartialDepartman()
+        {
+            var departman = db.Personels.Where(x => x.Sil == false)
+                .GroupBy(x => x.Departman.Ad)
+                .Select(x => new PersonelDepartmanViewModel { Adet = x.Count(), Departman = x.Key })
+                .ToList();
+            return PartialView(departman);
+        }

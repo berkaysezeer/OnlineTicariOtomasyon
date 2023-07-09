@@ -1,0 +1,80 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model Fatura
+@{
+    ViewBag.Title = "Fatura Düzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Fatura Düzenle</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Fatura/Index">Fatura</a></li>
+        <li class="breadcrumb-item active">Fatura Düzenle</li>
+    </ol>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-table mr-1"></i>Fatura Bilgileri</div>
+                <div class="card-body">
+
+                    @using (Html.BeginForm("Duzenle", "Fatura", FormMethod.Post))
+                    {
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                @Html.LabelFor(x => x.SeriNo, "Seri Numarası", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.SeriNo, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.SeriNo, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.SiraNo, "Sıra Numarası", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.SiraNo, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.SiraNo, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.Tarih, "Fatura Tarihi", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(model => model.Tarih, new { type = "date", @class = "form-control py-3", Value = Model.Tarih.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(x => x.Tarih, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-2">
+                                @Html.LabelFor(x => x.Saat, "Fatura Saati", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(model => model.Saat, new { type = "time", @class = "form-control py-3", Value = Model.Saat })
+                                @Html.ValidationMessageFor(x => x.Saat, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(x => x.VergiDairesi, "Vergi Dairesi", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.VergiDairesi, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.VergiDairesi, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(x => x.VergiNumarasi, "Vergi Numarası", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.VergiNumarasi, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.VergiNumarasi, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(x => x.TeslimAlan, "Teslim Alan Kişi", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.TeslimAlan, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.TeslimAlan, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(x => x.TeslimEden, "Teslim Eden Kişi", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.TeslimEden, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.TeslimEden, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group mt-4 mb-0">
+                                    <button class="btn btn-primary btn-block" type="submit">Ekle</button>
+                                </div>
+                            </div>
+                        </div>}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
