@@ -1,0 +1,64 @@
+﻿@using OnlineTicariOtomasyon.Models
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Kategori>
+@{ ViewBag.Title = "Kategoriler";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
+
+<div class="container-fluid">
+    <h1 class="mt-4">Kategoriler</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Kategori/Index">Kategori</a></li>
+        <li class="breadcrumb-item active">Kategoriler</li>
+    </ol>
+    @using (Html.BeginForm("PageIndex", "Kategori", FormMethod.Get))
+    {
+        <div class="row">
+
+            <div class="col-6">
+                <div class="form-row">
+                    <div class="form-group col-8">
+                        @Html.TextBox("p", "", new { @class = "form-control", @placeHolder  = "Arama Yapılacak Kelimeyi Giriniz" })
+                    </div>
+                    <div class="form-group col-4">
+                        <button class="btn btn-primary" type="submit">Ara</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>}
+
+    <div class="card mb-4 mt-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Kategori Listesi</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Kategori Adı</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var kategori in Model)
+                        {
+                            <tr>
+                                <td>@kategori.Ad</td>
+                                <td>
+                                    <a href="/Kategori/Duzenle/@kategori.Id" class="btn btn-primary">Düzenle</a>
+                                    <a href="/Kategori/Sil/@kategori.Id" class="btn btn-danger">Sil</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @Html.PagedListPager((IPagedList)Model, s => Url.Action("PageIndex", new { s }), new PagedListRenderOptions
+{
+    LiElementClasses = new List<string>
+    {"page-link"}
+})
+    <div class="form-group mt-4 mb-0"><a class="btn btn-primary" href="/Kategori/Ekle">Yeni Kategori Ekle</a></div>
+</div>

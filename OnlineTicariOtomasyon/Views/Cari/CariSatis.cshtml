@@ -45,8 +45,8 @@
                                 <td>@satis.Id</td>
                                 <td>@satis.Urun.Ad</td>
                                 <td>@(satis.Personel.Ad + " " + satis.Personel.Soyad)</td>
-                                <td>₺@Convert.ToInt32(satis.Tutar)</td>
-                                <td>₺@Convert.ToInt32(satis.ToplamTutar)</td>
+                                <td>@string.Format("{0:c}", satis.Tutar)</td>
+                                <td>@string.Format("{0:c}", satis.ToplamTutar)</td>
                                 <td>@satis.Adet</td>
                                 <td>@satis.Tarih.ToString("dd.MM.yyyy")</td>
                             </tr>

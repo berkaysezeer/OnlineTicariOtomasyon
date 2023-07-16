@@ -48,8 +48,8 @@
                             <td>@Model.Urun.Ad</td>
                             <td>@(Model.Personel.Ad + " " + Model.Personel.Soyad)</td>
                             <td>@(Model.Cari.Ad + " "+ Model.Cari.Soyad)</td>
-                            <td>₺@Convert.ToInt32(Model.Tutar)</td>
-                            <td>₺@Convert.ToInt32(Model.ToplamTutar)</td>
+                            <td>@string.Format("{0:c}", Model.Tutar)</td>
+                            <td>@string.Format("{0:c}", Model.ToplamTutar)</td>
                             <td>@Model.Adet</td>
                             <td>@Model.Tarih.ToString("dd.MM.yyyy")</td>
                             <td><a href="/Satis/Detay/@Model.Id" class="btn btn-outline-primary">Yazdır</a></td>

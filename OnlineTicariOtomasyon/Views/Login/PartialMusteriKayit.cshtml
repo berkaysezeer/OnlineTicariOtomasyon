@@ -1,0 +1,23 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model Cari
+<div class="pop-up">
+    <div id="small-dialog2" class="mfp-hide book-form">
+        <div class="login-form login-form-left">
+            <div class="agile-row">
+                <h3>Müşteri Kayıt Formu</h3>
+                <div class="login-agileits-top">
+                    @using (Html.BeginForm("CariEkle", "Login", FormMethod.Post))
+                    {
+                        @Html.TextBoxFor(x => x.Ad, new { @class = "form-control py-3", @placeHolder = "Ad" })
+                        @Html.TextBoxFor(x => x.Soyad, new { @class = "form-control py-3", @placeHolder = "Soyad" })
+                        @Html.TextBoxFor(x => x.Sifre, new { @class = "form-control py-3", @placeHolder = "Şifre", @type="password" })
+                        @Html.TextBoxFor(x => x.Eposta, new { @class = "form-control py-3", @placeHolder = "E-posta" })
+                        @Html.TextBoxFor(x => x.Sehir, new { @class = "form-control py-3", @placeHolder = "Şehir" })
+                        <input type="submit" value="Kayıt Ol">
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

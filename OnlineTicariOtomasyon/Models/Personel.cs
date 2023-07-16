@@ -24,7 +24,25 @@ namespace OnlineTicariOtomasyon.Models
         [Column(TypeName = "Varchar")]
         [StringLength(255, ErrorMessage = "En fazla 255 karakter girebilirsiniz")]
         public string Gorsel { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(255, ErrorMessage = "En fazla 255 karakter girebilirsiniz")]
+        public string Adres { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(11, ErrorMessage = "En fazla 11 karakter girebilirsiniz")]
+        public string CepTelefonu { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(50, ErrorMessage = "En fazla 50 karakter girebilirsiniz")]
+        public string Eposta { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(50, ErrorMessage = "En fazla 50 karakter girebilirsiniz")]
+        public string Sifre { get; set; }
+
         public ICollection<SatisHareket> SatisHarekets { get; set; }
+
         public int DepartmanId { get; set; }
         public virtual Departman Departman { get; set; }
 

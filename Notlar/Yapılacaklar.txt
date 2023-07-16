@@ -1,4 +1,8 @@
 1- Export data from datatable
-2- Datatable ürün görselleri gösterme
++2- Datatable ürün görselleri gösterme
 3- SatisHareket-FaturaKalem-Fatura birbirine bağlanacak: her satış hareket bir faturanın kalemi olabilecek
 4- Görseller bulut sunucuda tutulacak
+5- Todolist modal ile ekleme ve düzenleme yapılacak
++6- personel görsel güncellemede eksi görsel üzerine yazsın
++7- personel düzenlede personelin görselini göster
++8- Tutarları para birimi haline getir @string.Format("{0:c}", urun.AlisFiyati)

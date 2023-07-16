@@ -26,9 +26,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Seri No</th>
-                            <th>Sıra No</th>
+                            <th>Fatura No</th>
                             <th>Toplam Tutar</th>
                             <th>Vergi Daires</th>
                             <th>Vergi Numarası</th>
@@ -43,19 +41,18 @@
                         @foreach (var fatura in Model)
                         {
                             <tr>
-                                <td>@fatura.Id</td>
-                                <td>@fatura.SeriNo</td>
-                                <td>@fatura.SiraNo</td>
-                                <td></td>
+                                <td>@fatura.SeriNo@fatura.SiraNo</td>
+                                <td>@string.Format("{0:c}", fatura.ToplamTutar)</td>
                                 <td>@fatura.VergiDairesi</td>
-                                <td>@fatura.VergiDairesi</td>
+                                <td>@fatura.VergiNumarasi</td>
                                 <td>@fatura.TeslimEden</td>
                                 <td>@fatura.TeslimAlan</td>
                                 <td>@fatura.Tarih.ToString("dd.MM.yyy")</td>
                                 <td>@fatura.Saat</td>
                                 <td>
-                                    <a href="/Fatura/Detay/@fatura.Id" class="btn btn-outline-info">Detay</a>
-                                    <a href="/Fatura/Duzenle/@fatura.Id" class="btn btn-primary">Düzenle</a>
+                                    <a href="/Fatura/Detay/@fatura.Id" class="btn btn-outline-info btn-sm">Detay</a>
+                                    <a href="/Fatura/Duzenle/@fatura.Id" class="btn btn-primary btn-sm">Düzenle</a>
+                                    <a href="#" class="btn btn-primary btn-sm btnYeniKalem" data-faturano="@fatura.SeriNo@fatura.SiraNo" data-fatura="@fatura.Id">Kalem Ekle</a>
                                 </td>
                             </tr>
                         }
@@ -65,4 +62,124 @@
         </div>
     </div>
     <div class="form-group mt-4 mb-0"><a class="btn btn-primary" href="/Fatura/Ekle">Yeni Fatura Oluştur</a></div>
+    <div class="form-group mt-2 mb-0"><a class="btn btn-primary" href="#" data-target="#modalFaturalar" data-toggle="modal">Faturalar</a></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", ".btnYeniKalem", OpenModalPopUp);
+    });
+
+    function OpenModalPopUp() {
+        var faturaNo = $(this).data("faturano");
+        var faturaId = $(this).data("fatura")
+        $('.modal-title').html('Yeni Kalem Ekle (' + faturaNo + ')');
+        $('#FaturaId').val(faturaId)
+        $("#modalYeniKalem").modal();
+    }
+</script>
+
+<div class="modal fade" id="modalYeniKalem" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @using (Html.BeginForm("KalemEkleModal", "Fatura", FormMethod.Post))
+                        {
+                            @Html.Hidden("FaturaId")
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Açıklama", new { @class = "small mb-1" })
+                                    @Html.TextBox("Aciklama", "", new { @class = "form-control py-3" })
+                                    @Html.ValidationMessage("Aciklama", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    @Html.Label("BirimFiyat", "Birim Fiyatı", new { @class = "small mb-1" })
+                                    @Html.TextBox("BirimFiyat", "", new { type = "number", min = "0", step = "1", @class = "form-control py-3" })
+                                    @Html.ValidationMessage("BirimFiyat", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                                <div class="form-group col-md-4">
+                                    @Html.Label("Tutar", "Tutar", new { @class = "small mb-1" })
+                                    @Html.TextBox("Tutar", "", new { type = "number", min = "0", step = "1", @class = "form-control py-3" })
+                                    @Html.ValidationMessage("Tutar", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                                <div class="form-group col-md-4">
+                                    @Html.Label("Adet", "Adet", new { @class = "small mb-1" })
+                                    @Html.TextBox("Adet", "", new { type = "number", min = "0", step = "1", @class = "form-control py-3" })
+                                    @Html.ValidationMessage("Adet", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="form-group mt-4 mb-0">
+                                        <button class="btn btn-primary btn-block" type="submit">Ekle</button>
+                                    </div>
+                                </div>
+                            </div>}
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalFaturalar" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Faturalar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Fatura No</th>
+                                <th>Toplam Tutar</th>
+                                <th>Teslim Eden</th>
+                                <th>Teslim Alan</th>
+                                <th>Tarih</th>
+                                <th>Saat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var fatura in Model)
+                            {
+                                <tr>
+                                    <td>@fatura.SiraNo@fatura.SeriNo</td>
+                                    <td>@string.Format("{0:c}", fatura.ToplamTutar)</td>
+                                    <td>@fatura.TeslimEden</td>
+                                    <td>@fatura.TeslimAlan</td>
+                                    <td>@fatura.Tarih.ToString("dd.MM.yyy")</td>
+                                    <td>@fatura.Saat</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
 </div>

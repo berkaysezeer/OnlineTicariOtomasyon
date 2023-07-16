@@ -11,6 +11,8 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         // GET: Departman
         Context db = new Context();
+
+        [Authorize]
         public ActionResult Index()
         {
             var departmanlar = db.Departmans.Where(x => x.Sil == false).OrderBy(x => x.Ad).ToList();
@@ -18,6 +20,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Ekle()
         {
             return View();
@@ -37,6 +40,7 @@ namespace OnlineTicariOtomasyon.Controllers
             else return View();
         }
 
+        [Authorize]
         public ActionResult Sil(int Id)
         {
             var departman = db.Departmans.FirstOrDefault(x => x.Id == Id);
@@ -53,6 +57,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Duzenle(int Id)
         {
             var departman = db.Departmans.FirstOrDefault(x => x.Id == Id);
@@ -80,6 +85,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Detay(int Id)
         {
             var departmanAdi = db.Departmans.Where(x => x.Id == Id).Select(x => x.Ad).FirstOrDefault();
@@ -89,6 +95,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult PersonelSatis(int Id)
         {
             var personel = db.Personels.Where(x => x.Id == Id).FirstOrDefault();

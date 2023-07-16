@@ -1,0 +1,36 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model List<SatisHareket>
+@{
+    ViewBag.Title = "Siparisler";
+    Layout = "~/Views/Shared/_CariPanelLayout.cshtml";
+}
+
+<div class="row mt-5">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Sipariş Numarası</th>
+                    <th scope="col">Tutar</th>
+                    <th scope="col">Toplam Tutar</th>
+                    <th scope="col">Personel</th>
+                    <th scope="col">Sipariş Tarihi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var siparis in Model)
+                {
+                    <tr>
+                        <th scope="row">@siparis.Id</th>
+                        <td>@string.Format("{0:c}", siparis.Tutar)</td>
+                        <td>@string.Format("{0:c}", siparis.ToplamTutar)</td>
+                        <td>@siparis.Personel.Ad @siparis.Personel.Soyad</td>
+                        <td>@siparis.Tarih.ToString("dd.MM.yyyy HH:mm")</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+

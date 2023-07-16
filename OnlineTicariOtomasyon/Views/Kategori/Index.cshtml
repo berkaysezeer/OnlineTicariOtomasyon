@@ -24,22 +24,14 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Kategori Adı</th>
                             <th>İşlemler</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>ID</th>
-                            <th>Kategori Adı</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @foreach (var kategori in Model)
                         {
             <tr>
-                <td>@kategori.Id</td>
                 <td>@kategori.Ad</td>
                 <td>
                     <a href="/Kategori/Duzenle/@kategori.Id" class="btn btn-primary">Düzenle</a>

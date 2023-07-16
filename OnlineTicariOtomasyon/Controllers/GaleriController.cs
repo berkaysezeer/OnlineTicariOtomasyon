@@ -10,7 +10,8 @@ namespace OnlineTicariOtomasyon.Controllers
     public class GaleriController : Controller
     {
         Context db = new Context();
-        // GET: Galeri
+
+        [Authorize]
         public ActionResult Index()
         {
             var urunler = db.Uruns.Where(x => x.Sil == false).ToList();

@@ -11,13 +11,16 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
         // GET: Vari
+        [Authorize]
         public ActionResult Index()
         {
             var cariler = db.Caris.Where(x => x.Sil == false).OrderBy(x => x.Ad).ToList();
             return View(cariler);
         }
 
+
         [HttpGet]
+        [Authorize]
         public ActionResult Ekle()
         {
             return View();
@@ -38,6 +41,7 @@ namespace OnlineTicariOtomasyon.Controllers
             else return View();
         }
 
+        [Authorize]
         public ActionResult Sil(int Id)
         {
             var cari = db.Caris.Where(x => x.Id == Id).FirstOrDefault();
@@ -53,6 +57,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Duzenle(int Id)
         {
             var cari = db.Caris.FirstOrDefault(x => x.Id == Id);
@@ -62,6 +67,7 @@ namespace OnlineTicariOtomasyon.Controllers
 
         }
 
+        [HttpPost]
         public ActionResult Duzenle(Cari c)
         {
             var cari = db.Caris.FirstOrDefault(x => x.Id == c.Id);
@@ -88,6 +94,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult CariSatis(int Id)
         {
             var cari = db.Caris.Where(x => x.Id == Id).Select(x => x.Ad + " " + x.Soyad).FirstOrDefault();

@@ -39,8 +39,8 @@
                             <tr>
                                 <td>@kalem.Id</td>
                                 <td>@kalem.Aciklama</td>
-                                <td>₺@Convert.ToInt32(kalem.BirimFiyat)</td>
-                                <td>₺@Convert.ToInt32(kalem.Tutar)</td>
+                                <td>@string.Format("{0:c}", kalem.BirimFiyat)</td>
+                                <td>@string.Format("{0:c}", kalem.Tutar)</td>
                                 <td>@kalem.Adet</td>
                             </tr>
                         }

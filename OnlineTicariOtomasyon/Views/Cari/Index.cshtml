@@ -24,31 +24,17 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Ad</th>
-                            <th>Soyad</th>
+                            <th>Ad Soyad</th>
                             <th>Şehir</th>
                             <th>E-posta</th>
                             <th>İşlemler</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>ID</th>
-                            <th>Ad</th>
-                            <th>Soyad</th>
-                            <th>Şehir</th>
-                            <th>E-posta</th>
-                            <th>İşlemler</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @foreach (var cari in Model)
                         {
             <tr>
-                <td>@cari.Id</td>
-                <td>@cari.Ad</td>
-                <td>@cari.Soyad</td>
+                <td>@cari.Ad @cari.Soyad</td>
                 <td>@cari.Sehir</td>
                 <td>@cari.Eposta</td>
                 <td>

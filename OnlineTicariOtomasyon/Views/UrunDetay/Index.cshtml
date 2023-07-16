@@ -118,10 +118,10 @@
                             </div>
                             <div class="bg-gray py-2 px-3 mt-4">
                                 <h2 class="mb-0">
-                                    ₺@Model.SatisFiyati
+                                    @string.Format("{0:c}", Model.SatisFiyati)
                                 </h2>
                                 <h4 class="mt-0">
-                                    <small>Alış Fiyat: ₺@Model.AlisFiyati </small>
+                                    <small>Alış Fiyat: @string.Format("{0:c}", Model.AlisFiyati) </small>
                                 </h4>
                             </div>
                             <div class="mt-4">

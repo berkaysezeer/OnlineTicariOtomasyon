@@ -8,8 +8,8 @@
 <div class="container-fluid">
     <h1 class="mt-4">Satışlar</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/Satis/Index">tblSatislar</a></li>
-        <li class="breadcrumb-item active">Satışlar</li>
+        <li class="breadcrumb-item"><a href="/Satis/Index">Satışlar</a></li>
+        <li class="breadcrumb-item active">Satış Listesi</li>
     </ol>
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>Satış Listesi</div>
@@ -18,7 +18,6 @@
                 <table class="table table-bordered" id="tblSatislar" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Ürün</th>
                             <th>Personel</th>
                             <th>Cari</th>
@@ -29,31 +28,17 @@
                             <th>İşlemler</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>ID</th>
-                            <th>Ürün</th>
-                            <th>Personel</th>
-                            <th>Cari</th>
-                            <th>Tutar</th>
-                            <th>Toplam Tutar</th>
-                            <th>Adet</th>
-                            <th>Tarih</th>
-                            <th>İşlemler</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @foreach (var satis in Model)
                         {
                             <tr>
-                                <td>@satis.Id</td>
                                 <td>
                                     <a data-fancybox="gallery" target="_blank" href="@satis.Urun.UrunGorsel">@satis.Urun.Ad</a>
                                 </td>
                                 <td>@(satis.Personel.Ad + " " + satis.Personel.Soyad)</td>
                                 <td>@(satis.Cari.Ad + " "+ satis.Cari.Soyad)</td>
-                                <td>₺@Convert.ToInt32(satis.Tutar)</td>
-                                <td>₺@Convert.ToInt32(satis.ToplamTutar)</td>
+                                <td>@string.Format("{0:c}", satis.Tutar)</td>
+                                <td>@string.Format("{0:c}", satis.ToplamTutar)</td>
                                 <td>@satis.Adet</td>
                                 <td>@satis.Tarih.ToString("dd.MM.yyyy")</td>
                                 <td>
@@ -67,7 +52,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group mt-4 mb-0"><a class="btn btn-primary" href="/Satis">Yeni Satış Ekle</a></div>
+    @*<div class="form-group mt-4 mb-0"><a class="btn btn-primary" href="/Satis/Ekle">Yeni Satış Ekle</a></div>*@
 </div>
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
 

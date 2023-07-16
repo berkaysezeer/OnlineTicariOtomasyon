@@ -17,15 +17,24 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>}
+
+    @if (TempData["UrunDanger"] != null)
+    {
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    @TempData["UrunDanger"].ToString()
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>}
+
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i>Ürün Listesi</div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="tblUrunler" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Ürün Adı</th>
+                            <th>Ürün</th>
                             <th>Marka</th>
                             <th>Kategori</th>
                             <th>Alış Fiyatı</th>
@@ -38,12 +47,11 @@
                         @foreach (var urun in Model)
                         {
             <tr>
-                <td>@urun.Id</td>
                 <td><a data-fancybox="gallery" target="_blank" href="@urun.UrunGorsel">@urun.Ad</a></td>
                 <td>@urun.Kategori.Ad</td>
                 <td>@urun.Marka.Ad</td>
-                <td>@Convert.ToInt32(urun.AlisFiyati)</td>
-                <td>@Convert.ToInt32(urun.SatisFiyati)</td>
+                <td>@string.Format("{0:c}", urun.AlisFiyati)</td>
+                <td>@string.Format("{0:c}", urun.SatisFiyati)</td>
                 <td>
                     <span class="badge badge-@(urun.Stok <= 20 ? "danger" : urun.Stok >= 21 &&  urun.Stok < 100 ? "primary" : "success")">
                         @urun.Stok
@@ -53,6 +61,7 @@
                     <a href="/UrunDetay/Index/@urun.Id" class="btn btn-info">Detay</a>
                     <a href="/Urun/Duzenle/@urun.Id" class="btn btn-primary">Düzenle</a>
                     <a href="/Urun/Sil/@urun.Id" class="btn btn-danger">Sil</a>
+                    <a href="#" class="btn btn-success btnSatis" data-urunid="@urun.Id" data-urunadi="@urun.Ad" data-urunfiyat="@urun.SatisFiyati" data-personelid="@ViewBag.PersonelId">Satış</a>
                 </td>
             </tr>}
                     </tbody>
@@ -62,3 +71,100 @@
     </div>
     <div class="form-group mt-4 mb-0"><a class="btn btn-primary" href="/Urun/Ekle">Yeni Ürün Ekle</a></div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", ".btnSatis", OpenModalPopUp);
+    });
+
+    $(document).ready(function () {
+        $(document).on("input", "#Adet", ToplamTutarGuncelle);
+    });
+
+    function ToplamTutarGuncelle() {
+        var adet = $('#Adet').val();
+        var urunFiyat = $('#UrunFiyat').val();
+
+        var toplamTutar = parseInt(adet) * parseInt(urunFiyat);
+        toplamTutar = TlFormati(toplamTutar);
+
+        $('#lblToplamTutar').html(toplamTutar);
+    }
+
+    function OpenModalPopUp() {
+        var urunId = $(this).data("urunid");
+        var urunAd = $(this).data("urunadi");
+        var personelId = $(this).data("personelid");
+        var urunFiyat = $(this).data("urunfiyat");
+
+        $('.modal-title').html('Ürün: ' + urunAd);
+        $('#UrunId').val(urunId)
+        $('#PersonelId').val(personelId)
+        $('#UrunFiyat').val(urunFiyat)
+        $("#modalSatis").modal();
+    }
+</script>
+
+<div class="modal fade" id="modalSatis" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @using (Html.BeginForm("SatisEkle", "Urun", FormMethod.Post))
+                        {
+            @Html.Hidden("UrunId")
+                            @Html.Hidden("PersonelId")
+                            @Html.Hidden("UrunFiyat")
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    @Html.Label("Adet", "Adet", new { @class = "small mb-1" })
+                                                    @Html.TextBox("Adet", "", new { type = "number", min = "1", step = "1", @class = "form-control py-3" })
+                                                    @Html.ValidationMessage("Adet", "", new { @class = "small", @style = "color:red" })
+                                                </div>
+                                                <div class="form-group col-md-8">
+                                                    @Html.Label("CariId", "Müşteri", new { @class = "small mb-1" })
+                                                    @Html.DropDownList("CariId", (IEnumerable<SelectListItem>)ViewBag.CariListesi, "Seçiniz", new { @class = "form-control" })
+                                                    @Html.ValidationMessage("CariId", "", new { @class = "small", @style = "color:red" })
+                                                </div>
+                                            </div>
+
+                                                <label class="small">Toplam Tutar:</label>
+                                                <label id="lblToplamTutar" class="mb-1 small"></label>
+                                                                                
+                                                            <div class="form-row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group mt-2 mb-0">
+                                                                        <button class="btn btn-success btn-block" type="submit">Satış Yap</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<script>
+
+    $('#tblUrunler').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+        }
+    });
+
+</script>

@@ -16,6 +16,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.js"></script>
+    <script type="text/javascript">
+
+        function TlFormati(tutar) {
+            var currency_symbol = "₺"
+            var formattedOutput = new Intl.NumberFormat('tr-TR', {
+                style: 'currency',
+                currency: 'TRY',
+                minimumFractionDigits: 2,
+            });
+
+            return formattedOutput.format(tutar)
+        }
+    </script>
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -78,7 +91,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-file"></i></div>
                             Cariler
                         </a>
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="/Personel">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Personeller
                         </a>
@@ -120,15 +133,15 @@
                         </a>
                         <a class="nav-link" href="charts.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Fatura Kalemleri
-                        </a>
-                        <a class="nav-link" href="charts.html">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Giderler
                         </a>
-                        <a class="nav-link" href="charts.html">
+                        <a class="nav-link" href="/Istatistik">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Hareketler
+                            İstatistikler
+                        </a>
+                        <a class="nav-link" href="/Istatistik/OzetTablolar">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Hızlı Bakış
                         </a>
                     </div>
                 </div>

@@ -1,6 +1,8 @@
-﻿using OnlineTicariOtomasyon.Models;
+﻿using OnlineTicariOtomasyon.Functions;
+using OnlineTicariOtomasyon.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,7 +12,8 @@ namespace OnlineTicariOtomasyon.Controllers
     public class PersonelController : Controller
     {
         Context db = new Context();
-        // GET: Personel
+
+        [Authorize]
         public ActionResult Index()
         {
             var personeller = db.Personels.Where(x => x.Sil == false).ToList();
@@ -18,6 +21,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Ekle()
         {
             ViewBag.DepartmanListesi = Functions.DropdownListItems.Departman();
@@ -27,32 +31,43 @@ namespace OnlineTicariOtomasyon.Controllers
         [HttpPost]
         public ActionResult Ekle(Personel personel)
         {
-            if (personel != null)
+            if (Request.Files.Count > 0)
             {
-                if (!ModelState.IsValid)
+                if (personel != null)
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        ViewBag.DepartmanListesi = Functions.DropdownListItems.Departman();
+                        return View();
+                    }
+                    else
+                    {
+                        personel.Gorsel = GorselKaydet.PersonelGorselKaydet(Request, Server, personel);
+                        string encSifre = Functions.DataSecurity.Encrypt(personel.Sifre);
+                        personel.Sifre = encSifre;
+
+                        db.Personels.Add(personel);
+                        db.SaveChanges();
+
+                        TempData["PersonelSuccess"] = $"{personel.Ad} {personel.Soyad} başarıyla eklendi";
+
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
                 {
                     ViewBag.DepartmanListesi = Functions.DropdownListItems.Departman();
                     return View();
                 }
-                else
-                {
-                    db.Personels.Add(personel);
-                    db.SaveChanges();
-
-                    TempData["PersonelSuccess"] = $"{personel.Ad} {personel.Soyad} başarıyla eklendi";
-
-                    return RedirectToAction("Index");
-                }
             }
             else
             {
-
                 ViewBag.DepartmanListesi = Functions.DropdownListItems.Departman();
                 return View();
             }
-
         }
 
+        [Authorize]
         public ActionResult Sil(int Id)
         {
             var personel = db.Personels.FirstOrDefault(x => x.Id == Id);
@@ -68,6 +83,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Duzenle(int Id)
         {
             ViewBag.DepartmanListesi = Functions.DropdownListItems.Departman();
@@ -91,9 +107,10 @@ namespace OnlineTicariOtomasyon.Controllers
                 }
                 else
                 {
+                    if (Request.Files.Count > 0) personel.Gorsel = GorselKaydet.PersonelGorselKaydet(Request, Server, personel);
+
                     personel.Ad = p.Ad;
                     personel.Soyad = p.Soyad;
-                    personel.Gorsel = p.Gorsel;
                     personel.DepartmanId = p.DepartmanId;
                     db.SaveChanges();
 
@@ -103,6 +120,8 @@ namespace OnlineTicariOtomasyon.Controllers
                 }
             }
             else return RedirectToAction("Index");
+
+
         }
     }
 }

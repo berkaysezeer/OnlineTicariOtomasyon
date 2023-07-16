@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OnlineTicariOtomasyon.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace OnlineTicariOtomasyon.Controllers
 {
@@ -11,6 +13,7 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
 
+        [Authorize]
         public ActionResult Index()
         {
             var kategoriler = db.Kategoris
@@ -21,7 +24,19 @@ namespace OnlineTicariOtomasyon.Controllers
             return View(kategoriler);
         }
 
+        [Authorize]
+        public ActionResult PageIndex(int? s, string p)
+        {
+            var kategoriler = db.Kategoris
+                .Where(x => x.Sil == false && (x.Ad.Contains(p) || p == null))
+                .OrderBy(x => x.Ad)
+                .ToList().ToPagedList(s ?? 1, 5); //int null ise sayfa 1, sayfa başına düşen data
+
+            return View(kategoriler);
+        }
+
         [HttpGet]
+        [Authorize]
         public ActionResult Ekle()
         {
             return View();
@@ -42,7 +57,7 @@ namespace OnlineTicariOtomasyon.Controllers
             else return View();
         }
 
-
+        [Authorize]
         public ActionResult Sil(int Id)
         {
             var kategori = db.Kategoris.FirstOrDefault(x => x.Id == Id);
@@ -59,6 +74,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Duzenle(int Id)
         {
             var kategori = db.Kategoris.FirstOrDefault(x => x.Id == Id);
@@ -67,6 +83,7 @@ namespace OnlineTicariOtomasyon.Controllers
             else return RedirectToAction("Index");
         }
 
+        [HttpPost]
         public ActionResult Duzenle(Kategori k)
         {
             var kategori = db.Kategoris.FirstOrDefault(x => x.Id == k.Id);

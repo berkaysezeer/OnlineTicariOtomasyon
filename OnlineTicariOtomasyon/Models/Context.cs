@@ -8,6 +8,14 @@ namespace OnlineTicariOtomasyon.Models
 {
     public class Context : DbContext
     {
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SatisHareket>()
+                        .HasOptional(s => s.Kargo)
+                        .WithRequired(ad => ad.SatisHareket);
+        }
+
+
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Cari> Caris { get; set; }
         public DbSet<Departman> Departmans { get; set; }
@@ -19,5 +27,8 @@ namespace OnlineTicariOtomasyon.Models
         public DbSet<SatisHareket> SatisHarekets { get; set; }
         public DbSet<Urun> Uruns { get; set; }
         public DbSet<Marka> Markas { get; set; }
+        public DbSet<Yapilacak> Yapilacaks { get; set; }
+        public DbSet<Kargo> Kargos { get; set; }
+        public DbSet<KargoDurum> KargoDurums { get; set; }
     }
 }

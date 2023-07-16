@@ -1,0 +1,100 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model List<Yapilacak>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 3 | Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/jqvmap/jqvmap.min.css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/summernote/summernote-bs4.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+
+    <section class="content">
+        <div class="container-fluid mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        Yapılacaklar
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <ul class="todo-list" data-widget="todo-list">
+                        @foreach (var yapilacak in Model)
+                        {
+                            <li>
+                                <div class="d-inline ml-2">
+                                    @Html.CheckBoxFor(x => yapilacak.YapildiMi, new { Id = yapilacak.Id, @class = "toggle", data_url = Url.Action("YapildiMiGuncelle", "Yapilacaklar", new { Id = yapilacak.Id }) })
+                                </div>
+                                <span class="text">@yapilacak.Baslik</span>
+                                <small class="badge badge-primary"><i class="far fa-clock"></i> @yapilacak.Tarih.ToString("dd.MM.yyyy HH:mm")</small>
+                                <div class="tools">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="card-footer clearfix">
+                    <button type="button" class="btn btn-info float-right"><i class="fas fa-plus"></i> Yeni Ekle</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="~/AdminLTE-3.0.4/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/plugins/chart.js/Chart.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/plugins/sparklines/sparkline.js"></script>
+    <script src="~/AdminLTE-3.0.4/plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <script src="~/AdminLTE-3.0.4/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/plugins/toastr/toastr.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/plugins/moment/moment.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="~/AdminLTE-3.0.4/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/dist/js/adminlte.js"></script>
+    <script src="~/AdminLTE-3.0.4/dist/js/demo.js"></script>
+
+    <script>
+        $(function () {
+            $('.toggle').change(function () {
+                var self = $(this);
+                var url = self.data('url');
+                var id = self.attr('Id');
+                var value = self.prop('checked');
+
+                $.ajax({
+                    url: url,
+                    data: { id: id },
+                    type: 'POST',
+                    success: function (response) {
+                        //sweetalert2'yi burada çalıştırmayı denedim fakat olmadı
+                        alert('Todolist güncellendi');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

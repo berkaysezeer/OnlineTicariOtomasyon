@@ -1,0 +1,79 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model List<Personel>
+@{
+    ViewBag.Title = "Personeller";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 3 | Simple Tables</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition">
+
+    <div class="container-fluid">
+        <section class="content">
+            <div class="card card-solid">
+                <div class="card-body pb-0">
+                    <div class="row d-flex align-items-stretch">
+                        @foreach (var personel in Model)
+                        {
+                            <div class="col-6 col-sm-4 col-md-3 d-flex align-items-stretch">
+                                <div class="card bg-light">
+                                    <div class="card-header text-muted border-bottom-0">
+
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <h2 class="lead"><b>@personel.Ad @personel.Soyad</b></h2>
+                                                <p class="text-muted text-sm"><b>Departman: </b> @personel.Departman.Ad</p>
+                                                <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Adres: @personel.Adres</li>
+                                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Telefon: @personel.CepTelefonu</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-5 text-center">
+                                                <img src="@personel.Gorsel" alt="" class="img-circle img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="text-right">
+                                            <a href="#" class="btn btn-sm bg-teal">
+                                                <i class="fas fa-comments"></i>
+                                            </a>
+                                            <a href="/Departman/PersonelSatis/@personel.Id" class="btn btn-sm btn-primary" target="_blank">
+                                                <i class="fas fa-user"></i> Personel Satışları
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+    <script src="~/AdminLTE-3.0.4/plugins/jquery/jquery.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/dist/js/adminlte.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/dist/js/demo.js"></script>
+</body>
+</html>

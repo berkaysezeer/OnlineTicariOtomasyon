@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -27,5 +28,7 @@ namespace OnlineTicariOtomasyon.Models
         [Required(ErrorMessage = "Bu alan boş geçilemez")]
         public int PersonelId { get; set; }
         public virtual Personel Personel { get; set; }
+
+        public virtual Kargo Kargo { get; set; }
     }
 }

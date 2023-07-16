@@ -29,6 +29,10 @@ namespace OnlineTicariOtomasyon.Models
         [StringLength(50, ErrorMessage = "En fazla 50 karakter girebilirsiniz")]
         public string Eposta { get; set; }
 
+        [Column(TypeName = "Varchar")]
+        [StringLength(50, ErrorMessage = "En fazla 50 karakter girebilirsiniz")]
+        public string Sifre { get; set; }
+
         public bool Sil { get; set; }
 
         public Cari()

@@ -10,3 +10,52 @@ Code Firs ile model oluştururken Required kullanma
                 .ToList();
             return PartialView(departman);
         }
+
+class="@(yapilacak.YapildiMi ? "done" : "")"
+
+Sayfalama için ihtiyaç olan paket -> PagedList.Mvc
+
+   @Html.PagedListPager((IPagedList)Model, s => Url.Action("PageIndex", new { s }), new PagedListRenderOptions
+{
+    LiElementClasses = new List<string>
+    {"page-link"}
+})
+
+Modal'a veri taşıma 
+
+<a href="#" id="btnYeniKalem" class="btn btn-primary btn-sm" data-faturano="@fatura.SeriNo@fatura.SiraNo">Kalem Ekle</a>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", "#btnYeniKalem", OpenModalPopUp);
+    });
+
+    function OpenModalPopUp() {
+        var faturaNo = $(this).data("faturano");
+        $('.modal-title').html('Yeni Kalem Ekle (' + faturaNo + ')');
+        $("#modalYeniKalem").modal();
+    }
+</script>
+
+<div class="modal fade" id="modalYeniKalem" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+javascript currency
+
+https://aligoren.com/javascript-currency-formatting/

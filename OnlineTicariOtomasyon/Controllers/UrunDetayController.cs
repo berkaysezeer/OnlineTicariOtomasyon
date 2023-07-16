@@ -10,13 +10,15 @@ namespace OnlineTicariOtomasyon.Controllers
     public class UrunDetayController : Controller
     {
         Context db = new Context();
-        // GET: UrunDetay
+
+        [Authorize]
         public ActionResult Index(int Id)
         {
             var urun = db.Uruns.FirstOrDefault(x => x.Id == Id);
             return View(urun);
         }
 
+        [Authorize]
         public ActionResult Deneme()
         {
             var viewModel = new ViewModel();

@@ -10,14 +10,18 @@ namespace OnlineTicariOtomasyon.Controllers
     public class UrunController : Controller
     {
         Context db = new Context();
-        // GET: Urun
+
+        [Authorize]
         public ActionResult Index()
         {
+            ViewBag.CariListesi = Functions.DropdownListItems.Cari();
+            ViewBag.PersonelId = Session["PersonelId"];
             var urunler = db.Uruns.Where(x => x.Sil == false).OrderBy(x => x.Ad).ToList();
             return View(urunler);
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Ekle()
         {
             ViewBag.KategoriListesi = Functions.DropdownListItems.Kategori();
@@ -34,6 +38,7 @@ namespace OnlineTicariOtomasyon.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public ActionResult Sil(int Id)
         {
             var urun = db.Uruns.FirstOrDefault(x => x.Id == Id);
@@ -50,6 +55,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Duzenle(int Id)
         {
             var urun = db.Uruns.FirstOrDefault(x => x.Id == Id);
@@ -90,6 +96,57 @@ namespace OnlineTicariOtomasyon.Controllers
                 ViewBag.MarkaListesi = Functions.DropdownListItems.Marka();
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult SatisEkle(SatisHareket satisHareket)
+        {
+            if (satisHareket != null)
+            {
+                satisHareket.Tarih = DateTime.Now;
+
+                if (!ModelState.IsValid)
+                {
+                    TempData["UrunDanger"] = "Bir ya da birden fazla alanı boş bıraktınız";
+                }
+                else
+                {
+                    var urun = db.Uruns.Where(x => x.Id == satisHareket.UrunId).FirstOrDefault();
+                    int urunAdet = satisHareket.Adet;
+                    string urunAdi = urun.Ad;
+
+                    if (urunAdet > urun.Stok)
+                        TempData["UrunDanger"] = $"{urunAdi} için yeterli sayıda stok bulunamamaktardır. Mevcut stok: {urun.Stok}";
+                    else
+                    {
+                        string takipKodu = Functions.KargoIslemleri.TakipKoduUret();
+                        DateTime tarih = DateTime.Now;
+
+                        var kargoDurum = db.KargoDurums.FirstOrDefault(x => x.Id == 1);
+
+                        Kargo kargo = new Kargo()
+                        {
+                            KargoDurum = kargoDurum,
+                            Tarih = tarih,
+                            TahminiTeslimat = tarih.AddDays(2),
+                            Aciklama = $"{urun.Ad} ait kargo işleme alınmıştır",
+                            TakipKodu = takipKodu,
+                        };
+
+                        satisHareket.Kargo = kargo;
+                        satisHareket.Tutar = urun.SatisFiyati;
+                        satisHareket.ToplamTutar = urun.SatisFiyati * urunAdet;
+
+                        db.SatisHarekets.Add(satisHareket);
+                        db.SaveChanges();
+
+                        TempData["UrunSuccess"] = $"{urunAdi} satışı başarıyla gerçekleşti";
+                    }
+
+                }
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

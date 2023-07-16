@@ -11,7 +11,8 @@ namespace OnlineTicariOtomasyon.Controllers
     public class IstatistikController : Controller
     {
         Context db = new Context();
-        // GET: Istatistik
+
+        [Authorize]
         public ActionResult Index()
         {
             var cariler = db.Caris.ToList();
@@ -37,9 +38,9 @@ namespace OnlineTicariOtomasyon.Controllers
             //kritik stok
             ViewBag.d7 = urunler.Where(x => x.Stok < 20).Count();
             //max fiyatlı ürün
-            ViewBag.d8 = $"₺{Convert.ToInt32(urunler.Select(x => x.SatisFiyati).Max())}";
+            ViewBag.d8 = string.Format("{0:c}", urunler.Select(x => x.SatisFiyati).Max());
             //min fiyatlı ürün
-            ViewBag.d9 = $"₺{Convert.ToInt32(urunler.Select(x => x.SatisFiyati).Min())}";
+            ViewBag.d9 = string.Format("{0:c}", urunler.Select(x => x.SatisFiyati).Min());
             //en çok satan marka
             //ViewBag.d12 = markalar.Where(m => m.Id == (urunler
             //                         .GroupBy(x => x.MarkaId)
@@ -63,26 +64,29 @@ namespace OnlineTicariOtomasyon.Controllers
                 .Select(u => u.Ad).FirstOrDefault();
 
             //kasadaki tutar
-            ViewBag.d14 = $"₺{Convert.ToInt32(satisHareket.Sum(x => x.ToplamTutar))}";
+            ViewBag.d14 = string.Format("{0:c}", satisHareket.Sum(x => x.ToplamTutar));
             DateTime bugun = DateTime.Today;
             //bugünkü satışlar
-            ViewBag.d15 = $"₺{Convert.ToInt32(satisHareket.Where(x => x.Tarih == bugun).Sum(x => (decimal?)x.ToplamTutar))}";
+            ViewBag.d15 = string.Format("{0:c}", satisHareket.Where(x => x.Tarih == bugun).Sum(x => (decimal?)x.ToplamTutar));
             //bugünkü kasa
-            ViewBag.d16 = $"₺{Convert.ToInt32(satisHareket.Where(x => x.Tarih == bugun).Sum(x => (decimal?)x.ToplamTutar))}";
+            ViewBag.d16 = string.Format("{0:c}", satisHareket.Where(x => x.Tarih == bugun).Sum(x => (decimal?)x.ToplamTutar));
 
             return View();
         }
 
+        [Authorize]
         public ActionResult OzetTablolar()
         {
             return View();
         }
 
+        [Authorize]
         public PartialViewResult PartialKategoriler()
         {
             return PartialView();
         }
 
+        [Authorize]
         public PartialViewResult PartialCariler()
         {
             var cariler = (from x in db.Caris
@@ -99,6 +103,7 @@ namespace OnlineTicariOtomasyon.Controllers
             return PartialView(cariler);
         }
 
+        [Authorize]
         public PartialViewResult PartialUrunler()
         {
             var urunler = db.Uruns.Where(x => x.Sil == false).OrderBy(x => x.Ad).ToList();
@@ -106,6 +111,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         //Lamda ile anonim tip kullanımı
+        [Authorize]
         public PartialViewResult PartialDepartman()
         {
             var departman = db.Personels.Where(x => x.Sil == false)

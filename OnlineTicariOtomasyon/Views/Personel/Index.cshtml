@@ -26,32 +26,16 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Ad</th>
-                            <th>Soyad</th>
-                            <th>Görsel</th>
+                            <th>Ad Soyad</th>
                             <th>Departman</th>
                             <th>işlemler</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>ID</th>
-                            <th>Ad</th>
-                            <th>Soyad</th>
-                            <th>Görsel</th>
-                            <th>Departman</th>
-                            <th>işlemler</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @foreach (var personel in Model)
                         {
                             <tr>
-                                <td>@personel.Id</td>
-                                <td>@personel.Ad</td>
-                                <td>@personel.Soyad</td>
-                                <td></td>
+                                <td>@personel.Ad @personel.Soyad</td>
                                 <td>@personel.Departman.Ad</td>
                                 <td>
                                     <a href="/Departman/PersonelSatis/@personel.Id" class="btn btn-info">Satışlar</a>
