@@ -11,7 +11,7 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
 
-        [Authorize]
+
         public ActionResult Index()
         {
             var satislar = db.SatisHarekets.ToList();
@@ -19,7 +19,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+
         public ActionResult Ekle()
         {
             ViewBag.PersonelListesi = Functions.DropdownListItems.Personel();
@@ -79,7 +79,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+
         public ActionResult Duzenle(int Id)
         {
             var satis = db.SatisHarekets.Where(x => x.Id == Id).FirstOrDefault();
@@ -146,7 +146,7 @@ namespace OnlineTicariOtomasyon.Controllers
             else return RedirectToAction("Index");
         }
 
-        [Authorize]
+
         public ActionResult Detay(int Id)
         {
             var satis = db.SatisHarekets.Where(x => x.Id == Id).FirstOrDefault();
@@ -155,11 +155,19 @@ namespace OnlineTicariOtomasyon.Controllers
             else return RedirectToAction("Index");
         }
 
-        [Authorize]
+
         public ActionResult Personeller()
         {
             var personeller = db.Personels.Where(x => x.Sil == false).ToList();
             return View(personeller);
         }
+
+        public JsonResult UrunGetir(int KategoriId)
+        {
+            var urunler = Functions.DropdownListItems.Urun(KategoriId);
+            var json = Json(urunler, JsonRequestBehavior.AllowGet);
+            return json;
+        }
+
     }
 }

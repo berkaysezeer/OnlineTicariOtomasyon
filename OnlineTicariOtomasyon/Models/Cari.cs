@@ -33,13 +33,30 @@ namespace OnlineTicariOtomasyon.Models
         [StringLength(50, ErrorMessage = "En fazla 50 karakter girebilirsiniz")]
         public string Sifre { get; set; }
 
+        [Column(TypeName = "Varchar")]
+        [StringLength(50, ErrorMessage = "En fazla 50 karakter girebilirsiniz")]
+        public string Meslek { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(13, ErrorMessage = "En fazla 13 karakter girebilirsiniz")]
+        public string CepTelefonu { get; set; }
+
         public bool Sil { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(10)]
+        public string Yetki { get; set; } = "Personel";
 
         public Cari()
         {
             Sil = false;
         }
 
+        [Column(TypeName = "Varchar")]
+        [StringLength(255, ErrorMessage = "En fazla 255 karakter girebilirsiniz")]
+        public string Gorsel { get; set; }
+
         public ICollection<SatisHareket> SatisHarekets { get; set; }
+        public ICollection<Paylasim> Paylasims { get; set; }
     }
 }

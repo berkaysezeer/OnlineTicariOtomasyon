@@ -12,10 +12,12 @@ namespace OnlineTicariOtomasyon.Models
         public int Id { get; set; }
 
         [Column(TypeName = "Varchar")]
+        [Required]
         [StringLength(30, ErrorMessage = "En fazla 30 karakter girebilirsiniz")]
         public string Baslik { get; set; }
 
         [Column(TypeName = "Varchar")]
+        [Required]
         [StringLength(512, ErrorMessage = "En fazla 512 karakter girebilirsiniz")]
         public string Detay { get; set; }
 

@@ -12,7 +12,7 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
 
-        [Authorize]
+        
         public ActionResult Index()
         {
             var cariler = db.Caris.ToList();
@@ -74,19 +74,19 @@ namespace OnlineTicariOtomasyon.Controllers
             return View();
         }
 
-        [Authorize]
+        
         public ActionResult OzetTablolar()
         {
             return View();
         }
 
-        [Authorize]
+        
         public PartialViewResult PartialKategoriler()
         {
             return PartialView();
         }
 
-        [Authorize]
+        
         public PartialViewResult PartialCariler()
         {
             var cariler = (from x in db.Caris
@@ -103,7 +103,7 @@ namespace OnlineTicariOtomasyon.Controllers
             return PartialView(cariler);
         }
 
-        [Authorize]
+        
         public PartialViewResult PartialUrunler()
         {
             var urunler = db.Uruns.Where(x => x.Sil == false).OrderBy(x => x.Ad).ToList();
@@ -111,7 +111,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         //Lamda ile anonim tip kullanımı
-        [Authorize]
+        
         public PartialViewResult PartialDepartman()
         {
             var departman = db.Personels.Where(x => x.Sil == false)

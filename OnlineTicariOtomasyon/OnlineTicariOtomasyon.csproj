@@ -61,6 +61,8 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -125,6 +127,13 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="zxing, Version=0.16.9.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.9\lib\net47\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.9.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.9\lib\net47\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -137,8 +146,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CariPanelController.cs" />
     <Compile Include="Controllers\DepartmanController.cs" />
+    <Compile Include="Controllers\DuyuruController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FaturaController.cs" />
+    <Compile Include="Controllers\FaturalarController.cs" />
     <Compile Include="Controllers\GaleriController.cs" />
+    <Compile Include="Controllers\GrafikController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IstatistikController.cs" />
     <Compile Include="Controllers\KargoController.cs" />
@@ -162,6 +175,7 @@
     <Compile Include="Models\Cari.cs" />
     <Compile Include="Models\Context.cs" />
     <Compile Include="Models\Departman.cs" />
+    <Compile Include="Models\Duyuru.cs" />
     <Compile Include="Models\Fatura.cs" />
     <Compile Include="Models\FaturaKalem.cs" />
     <Compile Include="Models\Gider.cs" />
@@ -169,13 +183,23 @@
     <Compile Include="Models\KargoDurum.cs" />
     <Compile Include="Models\Kategori.cs" />
     <Compile Include="Models\Marka.cs" />
+    <Compile Include="Models\Mesaj.cs" />
+    <Compile Include="Models\Paylasim.cs" />
     <Compile Include="Models\Personel.cs" />
     <Compile Include="Models\SatisHareket.cs" />
     <Compile Include="Models\Urun.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Models\Yapilacak.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Roller\SistemRoleProvider.cs" />
+    <Compile Include="ViewModels\CariPaylasimViewModel.cs" />
     <Compile Include="ViewModels\FaturaViewModel.cs" />
+    <Compile Include="ViewModels\GrafikViewModel.cs" />
     <Compile Include="ViewModels\OzetTabloViewModel.cs" />
     <Compile Include="ViewModels\PersonelDepartmanViewModel.cs" />
   </ItemGroup>
@@ -336,57 +360,6 @@
     <Content Include="AdminLTE-3.0.4\index.html" />
     <Content Include="AdminLTE-3.0.4\index2.html" />
     <Content Include="AdminLTE-3.0.4\index3.html" />
-    <Content Include="AdminLTE-3.0.4\pages\calendar.html" />
-    <Content Include="AdminLTE-3.0.4\pages\charts\chartjs.html" />
-    <Content Include="AdminLTE-3.0.4\pages\charts\flot.html" />
-    <Content Include="AdminLTE-3.0.4\pages\charts\inline.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\404.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\500.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\blank.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\contacts.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\e-commerce.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\forgot-password.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\invoice-print.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\invoice.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\language-menu.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\legacy-user-menu.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\lockscreen.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\login.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\pace.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\profile.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\project-add.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\project-detail.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\project-edit.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\projects.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\recover-password.html" />
-    <Content Include="AdminLTE-3.0.4\pages\examples\register.html" />
-    <Content Include="AdminLTE-3.0.4\pages\forms\advanced.html" />
-    <Content Include="AdminLTE-3.0.4\pages\forms\editors.html" />
-    <Content Include="AdminLTE-3.0.4\pages\forms\general.html" />
-    <Content Include="AdminLTE-3.0.4\pages\forms\validation.html" />
-    <Content Include="AdminLTE-3.0.4\pages\gallery.html" />
-    <Content Include="AdminLTE-3.0.4\pages\layout\boxed.html" />
-    <Content Include="AdminLTE-3.0.4\pages\layout\collapsed-sidebar.html" />
-    <Content Include="AdminLTE-3.0.4\pages\layout\fixed-footer.html" />
-    <Content Include="AdminLTE-3.0.4\pages\layout\fixed-sidebar.html" />
-    <Content Include="AdminLTE-3.0.4\pages\layout\fixed-topnav.html" />
-    <Content Include="AdminLTE-3.0.4\pages\layout\top-nav-sidebar.html" />
-    <Content Include="AdminLTE-3.0.4\pages\layout\top-nav.html" />
-    <Content Include="AdminLTE-3.0.4\pages\mailbox\compose.html" />
-    <Content Include="AdminLTE-3.0.4\pages\mailbox\mailbox.html" />
-    <Content Include="AdminLTE-3.0.4\pages\mailbox\read-mail.html" />
-    <Content Include="AdminLTE-3.0.4\pages\tables\data.html" />
-    <Content Include="AdminLTE-3.0.4\pages\tables\jsgrid.html" />
-    <Content Include="AdminLTE-3.0.4\pages\tables\simple.html" />
-    <Content Include="AdminLTE-3.0.4\pages\UI\buttons.html" />
-    <Content Include="AdminLTE-3.0.4\pages\UI\general.html" />
-    <Content Include="AdminLTE-3.0.4\pages\UI\icons.html" />
-    <Content Include="AdminLTE-3.0.4\pages\UI\modals.html" />
-    <Content Include="AdminLTE-3.0.4\pages\UI\navbar.html" />
-    <Content Include="AdminLTE-3.0.4\pages\UI\ribbons.html" />
-    <Content Include="AdminLTE-3.0.4\pages\UI\sliders.html" />
-    <Content Include="AdminLTE-3.0.4\pages\UI\timeline.html" />
-    <Content Include="AdminLTE-3.0.4\pages\widgets.html" />
     <Content Include="AdminLTE-3.0.4\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="AdminLTE-3.0.4\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
     <Content Include="AdminLTE-3.0.4\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
@@ -2014,8 +1987,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\favico.png" />
     <Content Include="Content\PagedList.css" />
-    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -2452,6 +2425,10 @@
     <Content Include="AdminLTE-3.0.4\README.md" />
     <Content Include="Images\Personel\a822e4c7-c826-42b8-9a16-85619cb31035" />
     <Content Include="Images\Personel\BatuhanCoşar-9" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2693,11 +2670,25 @@
     <Content Include="Views\CariPanel\Siparisler.cshtml" />
     <Content Include="Views\Kategori\PageIndex.cshtml" />
     <Content Include="Views\Kargo\Index.cshtml" />
+    <Content Include="Views\Kargo\KargoDetay.cshtml" />
+    <Content Include="Views\Grafik\Index.cshtml" />
+    <Content Include="Views\CariPanel\Mesajlar.cshtml" />
+    <Content Include="Views\CariPanel\PartialMesajlarMenu.cshtml" />
+    <Content Include="Views\CariPanel\MesajDetay.cshtml" />
+    <Content Include="Views\CariPanel\YeniMesaj.cshtml" />
+    <Content Include="Views\CariPanel\Kargolar.cshtml" />
+    <Content Include="Views\CariPanel\KargoDetay.cshtml" />
+    <Content Include="Views\CariPanel\PartialProfilBilgileri.cshtml" />
+    <Content Include="Views\Error\Hata.cshtml" />
+    <Content Include="Views\Duyuru\Index.cshtml" />
+    <Content Include="Views\CariPanel\Duyurular.cshtml" />
+    <Content Include="Views\Faturalar\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Marka\" />
-    <Folder Include="Views\Vari\" />
+    <Folder Include="Images\QrKod\" />
+    <Folder Include="Images\Urun\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

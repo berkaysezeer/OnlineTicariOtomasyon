@@ -46,11 +46,21 @@ namespace OnlineTicariOtomasyon.Models
         public int DepartmanId { get; set; }
         public virtual Departman Departman { get; set; }
 
+        [Column(TypeName = "Varchar")]
+        [StringLength(10)]
+        public string Yetki { get; set; } = "Cari";
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(50)]
+        public string Guid { get; set; }
+
         public bool Sil { get; set; }
 
         public Personel()
         {
             Sil = false;
         }
+
+        public ICollection<Duyuru> Duyurus { get; set; }
     }
 }

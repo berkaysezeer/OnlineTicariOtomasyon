@@ -11,7 +11,7 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
 
-        [Authorize]
+        
         public ActionResult Index()
         {
             var urunler = db.Uruns.Where(x => x.Sil == false).ToList();

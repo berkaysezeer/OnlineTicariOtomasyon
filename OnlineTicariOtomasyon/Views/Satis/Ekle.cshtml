@@ -4,6 +4,33 @@
     ViewBag.Title = "Satış Ekle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $(function () {
+        $('#KategoriId').change(function () {
+
+            var id = $('#KategoriId').val();
+
+            $.ajax({
+                url: '/Satis/UrunGetir',
+                data: {
+                    KategoriId: id
+                },
+                type: "POST",
+                dataType: "Json",
+                success: function (data) {
+                    console.log(data);
+                    $('#UrunId').empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $('#UrunId').append("<option value='" + data[i].Value + "'>" + data[i].Text + "</Option>");
+                    }
+                }
+            });
+        });
+    });
+</script>
+
 <div class="container-fluid">
     <h1 class="mt-4">Yeni Satış Ekle</h1>
     <ol class="breadcrumb mb-4">
@@ -35,8 +62,9 @@
                             </div>
                             <div class="form-group col-md-4">
                                 @Html.LabelFor(x => x.UrunId, "Ürün", new { @class = "small mb-1" })
-                                @Html.DropDownList("UrunId", (IEnumerable<SelectListItem>)ViewBag.UrunListesi, "Seçiniz", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.UrunId, "", new { @class = "small", @style = "color:red" })
+                                @Html.DropDownList("UrunId", Enumerable.Empty<SelectListItem>
+                                    (), "Seçiniz", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.UrunId, "", new { @class = "small", @style = "color:red" })
                             </div>
                             <div class="form-group col-md-4">
                                 @Html.LabelFor(x => x.Adet, "Adet", new { @class = "small mb-1" })

@@ -11,14 +11,14 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
 
-        [Authorize]
+        
         public ActionResult Index(int Id)
         {
             var urun = db.Uruns.FirstOrDefault(x => x.Id == Id);
             return View(urun);
         }
 
-        [Authorize]
+        
         public ActionResult Deneme()
         {
             var viewModel = new ViewModel();

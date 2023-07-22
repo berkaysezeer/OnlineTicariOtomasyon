@@ -13,7 +13,7 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
 
-        [Authorize]
+
         public ActionResult Index()
         {
             var personeller = db.Personels.Where(x => x.Sil == false).ToList();
@@ -21,10 +21,10 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+
         public ActionResult Ekle()
         {
-            ViewBag.DepartmanListesi = Functions.DropdownListItems.Departman();
+            ViewBag.DepartmanListesi = DropdownListItems.Departman();
             return View();
         }
 
@@ -37,13 +37,15 @@ namespace OnlineTicariOtomasyon.Controllers
                 {
                     if (!ModelState.IsValid)
                     {
-                        ViewBag.DepartmanListesi = Functions.DropdownListItems.Departman();
+                        ViewBag.DepartmanListesi = DropdownListItems.Departman();
                         return View();
                     }
                     else
                     {
-                        personel.Gorsel = GorselKaydet.PersonelGorselKaydet(Request, Server, personel);
-                        string encSifre = Functions.DataSecurity.Encrypt(personel.Sifre);
+                        string guid = Guid.NewGuid().ToString();
+                        personel.Guid = guid;
+                        personel.Gorsel = GorselKaydet.PersonelGorselKaydet(Request, Server, guid);
+                        string encSifre = DataSecurity.Encrypt(personel.Sifre);
                         personel.Sifre = encSifre;
 
                         db.Personels.Add(personel);
@@ -56,18 +58,18 @@ namespace OnlineTicariOtomasyon.Controllers
                 }
                 else
                 {
-                    ViewBag.DepartmanListesi = Functions.DropdownListItems.Departman();
+                    ViewBag.DepartmanListesi = DropdownListItems.Departman();
                     return View();
                 }
             }
             else
             {
-                ViewBag.DepartmanListesi = Functions.DropdownListItems.Departman();
+                ViewBag.DepartmanListesi = DropdownListItems.Departman();
                 return View();
             }
         }
 
-        [Authorize]
+
         public ActionResult Sil(int Id)
         {
             var personel = db.Personels.FirstOrDefault(x => x.Id == Id);
@@ -83,10 +85,10 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+
         public ActionResult Duzenle(int Id)
         {
-            ViewBag.DepartmanListesi = Functions.DropdownListItems.Departman();
+            ViewBag.DepartmanListesi = DropdownListItems.Departman();
             ViewBag.PersonelBilgisi = db.Personels.Where(x => x.Id == Id).Select(x => x.Ad + " " + x.Soyad).FirstOrDefault();
             var personel = db.Personels.FirstOrDefault(x => x.Id == Id);
             return View(personel);
@@ -101,13 +103,13 @@ namespace OnlineTicariOtomasyon.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.DepartmanListesi = Functions.DropdownListItems.Departman();
+                    ViewBag.DepartmanListesi = DropdownListItems.Departman();
                     ViewBag.PersonelBilgisi = db.Personels.Where(x => x.Id == p.Id).Select(x => x.Ad + " " + x.Soyad).FirstOrDefault();
                     return View(personel);
                 }
                 else
                 {
-                    if (Request.Files.Count > 0) personel.Gorsel = GorselKaydet.PersonelGorselKaydet(Request, Server, personel);
+                    if (Request.Files.Count > 0) personel.Gorsel = GorselKaydet.PersonelGorselKaydet(Request, Server, personel.Guid);
 
                     personel.Ad = p.Ad;
                     personel.Soyad = p.Soyad;

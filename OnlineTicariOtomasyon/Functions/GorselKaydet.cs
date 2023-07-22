@@ -9,11 +9,21 @@ namespace OnlineTicariOtomasyon.Functions
 {
     public static class GorselKaydet
     {
-        public static string PersonelGorselKaydet(HttpRequestBase Request, HttpServerUtilityBase Server, Personel personel)
+        public static string PersonelGorselKaydet(HttpRequestBase Request, HttpServerUtilityBase Server, string guid)
         {
-            string dosyaAdi = $"{personel.Ad}{personel.Soyad}-{personel.Id}";
+            string dosyaAdi = $"{guid}";
             string uzanti = Path.GetExtension(Request.Files[0].FileName);
             string dosyaYolu = $"/Images/Personel/{dosyaAdi}{uzanti}";
+            Request.Files[0].SaveAs(Server.MapPath(dosyaYolu));
+
+            return dosyaYolu;
+        }
+
+        public static string UrunGorselKaydet(HttpRequestBase Request, HttpServerUtilityBase Server, string guid)
+        {
+            string dosyaAdi = $"{guid}";
+            string uzanti = Path.GetExtension(Request.Files[0].FileName);
+            string dosyaYolu = $"/Images/Urun/{dosyaAdi}{uzanti}";
             Request.Files[0].SaveAs(Server.MapPath(dosyaYolu));
 
             return dosyaYolu;

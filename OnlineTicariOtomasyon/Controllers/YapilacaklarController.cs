@@ -11,7 +11,7 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
 
-        [Authorize]
+        
         public ActionResult Index()
         {
             var yapilacaklar = db.Yapilacaks.Where(x => x.Sil == false).OrderByDescending(x => x.Tarih).ToList();

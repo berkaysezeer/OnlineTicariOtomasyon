@@ -35,6 +35,12 @@ namespace OnlineTicariOtomasyon.Functions
             return urunler;
         }
 
+        public static IEnumerable<SelectListItem> Urun(int KategoriId)
+        {
+            IEnumerable<SelectListItem> urunler = new SelectList(db.Uruns.Where(x => x.Sil == false && x.KategoriId == KategoriId), "Id", "Ad");
+            return urunler;
+        }
+
         public static IEnumerable<SelectListItem> Personel()
         {
             var personeller = db.Personels
@@ -57,6 +63,20 @@ namespace OnlineTicariOtomasyon.Functions
                             {
                                 Id = x.Id,
                                 Ad = x.Ad + " " + x.Soyad.ToString()
+                            });
+
+            IEnumerable<SelectListItem> listCariler = new SelectList(cariler, "Id", "Ad");
+            return listCariler;
+        }
+
+        public static IEnumerable<SelectListItem> CariMesaj(int cariId)
+        {
+            var cariler = db.Caris
+                            .Where(x => x.Sil == false && x.Id != cariId)
+                            .Select(x => new
+                            {
+                                Id = x.Id,
+                                Ad = x.Ad + " " + x.Soyad + " (" + x.Eposta + ") "
                             });
 
             IEnumerable<SelectListItem> listCariler = new SelectList(cariler, "Id", "Ad");

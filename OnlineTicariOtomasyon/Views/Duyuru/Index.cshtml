@@ -1,0 +1,228 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model List<Duyuru>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <h1 class="mt-4">Duyurular</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Duyuru/Index">Duyuru</a></li>
+        <li class="breadcrumb-item active">Duyurular</li>
+    </ol>
+    @if (TempData["DuyuruSuccess"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["DuyuruSuccess"].ToString()
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>}
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Duyurular Listesi</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="tblDuyurular" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Konu</th>
+                            <th>Açıklama</th>
+                            <th>Tarih</th>
+                            <th>Durum</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var duyuru in Model)
+                        {
+                            <tr>
+                                <td>@duyuru.Konu</td>
+                                <td title="@duyuru.Aciklama">@(duyuru.Aciklama.Length > 130 ? @duyuru.Aciklama.Substring(0,127) + "...": @duyuru.Aciklama)</td>
+                                <td>@duyuru.Tarih.ToString("dd.MM.yyyy HH:mm")</td>
+                                <td>
+                                    @if (duyuru.Sil)
+                                    {
+                                        <span class="badge badge-danger">Silindi</span>
+                                    }
+                                    else
+                                    { <span class="badge badge-success">Aktif</span>}
+                                </td>
+                                <td>
+
+                                    @if (!duyuru.Sil)
+                                    {
+
+                                        <a href="#" class="btn btn-primary btn-sm btnDuyuruDuzenle" data-duyuru="@duyuru.Id" data-duyurukonu="@duyuru.Konu" data-duyuruaciklama="@duyuru.Aciklama">Düzenle</a>
+                                        <a href="#" class="btn btn-danger btn-sm btnDuyuruDuzenle" data-duyuru="@duyuru.Id" data-duyurukonu="@duyuru.Konu">Sil</a>
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-4 mb-0"><a class="btn btn-primary" href="#" id="btnYeniDuyuru">Yeni Duyuru Oluştur</a></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", "#btnYeniDuyuru", OpenModalPopUp);
+        $(document).on("click", ".btnDuyuruSil", OpenSilModal);
+        $(document).on("click", ".btnDuyuruDuzenle", OpenDuzenleModal);
+    });
+
+    function OpenModalPopUp() {
+        $("#modalYeniDuyuru").modal();
+    }
+
+    function OpenSilModal() {
+        var duyuruId = $(this).data("duyuru");
+        var duyuruKonu = $(this).data("duyurukonu");
+
+        $('.modalKonu').html(duyuruKonu + ' konulu duyuru silinecek. Onaylıyor musunuz?');
+        $('#Id').val(duyuruId)
+
+        $("#modalDuyuruSil").modal();
+    }
+
+    function OpenDuzenleModal() {
+        var duyuruId = $(this).data("duyuru");
+        var duyuruKonu = $(this).data("duyurukonu");
+        var duyuruAciklama = $(this).data("duyuruaciklama");
+
+        $('#Id').val(duyuruId);
+        $('#Konu').val(duyuruKonu);
+        $('#Aciklama').val(duyuruAciklama);
+
+        $("#modalDuyuruDuzenle").modal();
+    }
+
+</script>
+
+<div class="modal fade" id="modalDuyuruDuzenle" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Duyuru Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @using (Html.BeginForm("Duzenle", "Duyuru", FormMethod.Post))
+                        {
+                            @Html.Hidden("Id")
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Konu", new { @class = "small mb-1" })
+                                    @Html.TextBox("Konu", "", new { @class = "form-control py-3" })
+                                    @Html.ValidationMessage("Konu", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Açıklama", new { @class = "small mb-1" })
+                                    @Html.TextArea("Aciklama", "", new { @class = "form-control py-3" })
+                                    @Html.ValidationMessage("Aciklama", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="form-group mt-4 mb-0">
+                                        <button class="btn btn-primary btn-block" type="submit">Kaydet</button>
+                                    </div>
+                                </div>
+                            </div>}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDuyuruSil" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Uyarı! Duyuru Sililecek</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modalKonu">Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("Sil", "Duyuru", FormMethod.Post))
+                {
+                    @Html.Hidden("Id")
+                    <button type="submit" class="btn btn-primary">Onay</button>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalYeniDuyuru" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @using (Html.BeginForm("Ekle", "Duyuru", FormMethod.Post))
+                        {
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Konu", new { @class = "small mb-1" })
+                                    @Html.TextBox("Konu", "", new { @class = "form-control py-3" })
+                                    @Html.ValidationMessage("Konu", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Açıklama", new { @class = "small mb-1" })
+                                    @Html.TextArea("Aciklama", "", new { @class = "form-control py-3" })
+                                    @Html.ValidationMessage("Aciklama", "", new { @class = "small", @style = "color:red" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="form-group mt-4 mb-0">
+                                        <button class="btn btn-primary btn-block" type="submit">Ekle</button>
+                                    </div>
+                                </div>
+                            </div>}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<script>
+
+    $('#tblDuyurular').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+        },
+        order: [[2, 'desc']]
+    });
+
+</script>

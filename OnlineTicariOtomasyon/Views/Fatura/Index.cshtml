@@ -23,12 +23,12 @@
         <div class="card-header"><i class="fas fa-table mr-1"></i>Fatura Listesi</div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="tblFatura" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Fatura No</th>
                             <th>Toplam Tutar</th>
-                            <th>Vergi Daires</th>
+                            <th>Vergi Dairesi</th>
                             <th>Vergi Numarası</th>
                             <th>Teslim Eden</th>
                             <th>Teslim Alan</th>
@@ -52,7 +52,7 @@
                                 <td>
                                     <a href="/Fatura/Detay/@fatura.Id" class="btn btn-outline-info btn-sm">Detay</a>
                                     <a href="/Fatura/Duzenle/@fatura.Id" class="btn btn-primary btn-sm">Düzenle</a>
-                                    <a href="#" class="btn btn-primary btn-sm btnYeniKalem" data-faturano="@fatura.SeriNo@fatura.SiraNo" data-fatura="@fatura.Id">Kalem Ekle</a>
+                                    <a href="#" class="btn btn-success btn-sm btnYeniKalem" data-faturano="@fatura.SeriNo@fatura.SiraNo" data-fatura="@fatura.Id">Kalem Ekle</a>
                                 </td>
                             </tr>
                         }
@@ -183,3 +183,17 @@
         </div>
     </div>
 </div>
+
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<script>
+
+    $('#tblFatura').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+        }
+    });
+
+</script>

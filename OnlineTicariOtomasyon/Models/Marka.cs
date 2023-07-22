@@ -12,15 +12,11 @@ namespace OnlineTicariOtomasyon.Models
         public int Id { get; set; }
 
         [Column(TypeName = "Varchar")]
-        [StringLength(30)]
+        [Required]
+        [StringLength(30, ErrorMessage = "En fazla 30 karakter girebilirsiniz")]
         public string Ad { get; set; }
 
-        public bool Sil { get; set; }
-
-        public Marka()
-        {
-            Sil = false;
-        }
+        public bool Sil { get; set; } = false;
 
         public ICollection<Urun> Uruns { get; set; }
     }

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using ZXing;
 
 namespace OnlineTicariOtomasyon.Functions
 {
@@ -27,6 +31,34 @@ namespace OnlineTicariOtomasyon.Functions
                 result.Append(chars[b % (chars.Length)]);
             }
             return result.ToString();
+        }
+
+        public static string QrKodOlustur(string kargoUrl, string takipKodu, HttpServerUtilityBase Server)
+        {
+            string folderPath = "/Images/QrKod/";
+            string imagePath = $"/Images/QrKod/{takipKodu}.png";
+
+            if (!Directory.Exists(Server.MapPath(folderPath)))
+            {
+                Directory.CreateDirectory(Server.MapPath(folderPath));
+            }
+
+            var barcodeWriter = new BarcodeWriter();
+            barcodeWriter.Format = BarcodeFormat.QR_CODE;
+            var result = barcodeWriter.Write(kargoUrl);
+
+            string barcodePath = Server.MapPath(imagePath);
+            var barcodeBitmap = new Bitmap(result);
+            using (MemoryStream memory = new MemoryStream())
+            {
+                using (FileStream fs = new FileStream(barcodePath, FileMode.Create, FileAccess.ReadWrite))
+                {
+                    barcodeBitmap.Save(memory, ImageFormat.Jpeg);
+                    byte[] bytes = memory.ToArray();
+                    fs.Write(bytes, 0, bytes.Length);
+                }
+            }
+            return imagePath;
         }
     }
 }

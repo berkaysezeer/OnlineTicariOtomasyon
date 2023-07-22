@@ -8,6 +8,7 @@ using System.Web.Security;
 
 namespace OnlineTicariOtomasyon.Controllers
 {
+    [AllowAnonymous]
     public class LoginController : Controller
     {
         Context db = new Context();
@@ -47,6 +48,7 @@ namespace OnlineTicariOtomasyon.Controllers
             {
                 FormsAuthentication.SetAuthCookie(cari.Eposta, false);
                 Session["CariId"] = cari.Id;
+                Session["KisiBilgisi"] = $"{cari.Ad} {cari.Soyad}";
                 return RedirectToAction("Index", "CariPanel");
             }
             else return RedirectToAction("Index", "Login");
@@ -62,6 +64,7 @@ namespace OnlineTicariOtomasyon.Controllers
             {
                 FormsAuthentication.SetAuthCookie(personel.Eposta, false);
                 Session["PersonelId"] = personel.Id;
+                Session["KisiBilgisi"] = $"{personel.Ad} {personel.Soyad}";
                 return RedirectToAction("Index", "Satis");
             }
             else return RedirectToAction("Index", "Login");

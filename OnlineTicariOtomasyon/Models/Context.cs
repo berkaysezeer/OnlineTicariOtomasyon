@@ -30,5 +30,8 @@ namespace OnlineTicariOtomasyon.Models
         public DbSet<Yapilacak> Yapilacaks { get; set; }
         public DbSet<Kargo> Kargos { get; set; }
         public DbSet<KargoDurum> KargoDurums { get; set; }
+        public DbSet<Mesaj> Mesajs { get; set; }
+        public DbSet<Paylasim> Paylasims { get; set; }
+        public DbSet<Duyuru> Duyurus { get; set; }
     }
 }

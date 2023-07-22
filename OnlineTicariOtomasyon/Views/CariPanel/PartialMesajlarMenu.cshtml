@@ -1,0 +1,36 @@
+﻿<div class="col-md-3">
+    <a href="/CariPanel/YeniMesaj" class="btn btn-primary btn-block mb-3">Yeni Mesaj</a>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Klasörler</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a href="/CariPanel/Mesajlar" class="nav-link">
+                        <i class="fas fa-inbox"></i> Gelen Kutusu @{ int gelenMesajSayisi = ViewBag.GelenMesajSayisi;} @if (gelenMesajSayisi != 0)
+                        {<span class="badge bg-primary float-right">@gelenMesajSayisi</span>}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/CariPanel/Mesajlar?f=gonderilenler" class="nav-link">
+                        <i class="far fa-envelope"></i> Gönderilenler @{ int gonderilenMesajSayisi = ViewBag.GonderilenMesajSayisi;} @if (gonderilenMesajSayisi != 0)
+                        {<span class="badge bg-primary float-right">@gonderilenMesajSayisi</span>}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/CariPanel/Mesajlar?f=copkutusu" class="nav-link">
+                        <i class="far fa-trash-alt"></i> Çöp Kutusu @{ int silinenMesajSayisi = ViewBag.SilinenMesajSayisi;} @if (silinenMesajSayisi != 0)
+                        {<span class="badge bg-danger float-right">@silinenMesajSayisi</span>}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>

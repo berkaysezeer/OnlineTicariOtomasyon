@@ -11,11 +11,20 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
         // GET: Kargo
-        [Authorize]
+        
         public ActionResult Index()
         {
             var kargolar = db.Kargos.OrderByDescending(x => x.Tarih).ToList();
             return View(kargolar);
         }
+
+        [HttpGet]
+        
+        public ActionResult KargoDetay(string id)
+        {
+            var kargo = db.Kargos.FirstOrDefault(x => x.TakipKodu == id);
+            return View(kargo);
+        }
     }
+
 }

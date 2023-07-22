@@ -9,6 +9,7 @@ namespace OnlineTicariOtomasyon.ViewModels
     public class FaturaViewModel
     {
         public ICollection<Fatura>  Faturas { get; set; }
-        public Fatura Fatura { get; set; }
+        public ICollection<FaturaKalem> FaturaKalems { get; set; }
     }
+
 }

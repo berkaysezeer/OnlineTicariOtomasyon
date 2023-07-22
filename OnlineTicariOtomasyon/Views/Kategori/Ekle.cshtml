@@ -23,6 +23,7 @@
                             <div class="col-md-12">
                                 @Html.LabelFor(x => x.Ad, "Kategori Adı", new { @class = "small mb-1" })
                                 @Html.TextBoxFor(x => x.Ad, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.Ad, "", new { @class = "small", @style = "color:red" })
                             </div>
                         </div>
                         <div class="form-row">

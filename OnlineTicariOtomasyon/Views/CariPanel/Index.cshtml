@@ -1,7 +1,185 @@
-﻿@{
+﻿@using OnlineTicariOtomasyon.ViewModels
+@model CariPaylasimViewModel
+
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_CariPanelLayout.cshtml";
 }
 
-<h2>Müşteri Paneli'ne Hoş Geldiniz @ViewBag.CariBilgisi</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 3 | User Profile</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <!-- /.navbar -->
+        <!-- Content Wrapper. Contains page content -->
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-3">
+                        <h1>Profilim</h1>
+                    </div>
+                    <div class="col-sm-9">
+                        @if (TempData["BilgiGuncelleSuccess"] != null)
+                        {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                @TempData["BilgiGuncelleSuccess"].ToString()
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                   @Html.Action("PartialProfilBilgileri","CariPanel")
+                    <!-- /.col -->
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header p-2">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#activity" data-toggle="tab">Paylaşım</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a id="hesapAyarlari" class="nav-link" href="#settings" data-toggle="tab">Hesap Ayarları</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <div class="active tab-pane" id="activity">
+                                        <!-- Post -->
+                                        @using (Html.BeginForm("PaylasimYap", "CariPanel", FormMethod.Post))
+                                        {
+                                            @Html.HiddenFor(x => x.Cari.Id)
 
+                                            @Html.TextBoxFor(x => x.Paylasim.Aciklama, "", new { @class = "form-control form-control-sm", @placeholder = "Paylaşım yap", @style = "height:50px" })
+
+                                            <p>
+                                                <button class="btn btn-primary text-sm mr-2 mt-2" type="submit"><i class="fas fa-share mr-1"></i> Paylaş</button>
+                                            </p>
+                                        }
+
+
+
+                                        @foreach (var paylasim in Model.Paylasims)
+                                        {
+                                            <div class="post mt-3">
+                                                <div class="user-block">
+                                                    <img class="img-circle img-bordered-sm" src="@paylasim.Cari.Gorsel" alt="user image">
+                                                    <span class="username">
+                                                        <a href="#">@paylasim.Cari.Ad @paylasim.Cari.Soyad</a>
+                                                        <a href="#" class="float-right btn-tool">
+                                                            <i class="fas fa-times"></i>
+                                                        </a>
+                                                    </span>
+                                                    <span class="description">@paylasim.Tarih.ToString("dd.MM.yyyy HH:mm")</span>
+                                                </div>
+                                                <p> @paylasim.Aciklama </p>
+                                            </div>
+                                        }
+
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                    <!-- /.tab-pane -->
+                                    <div class="tab-pane" id="settings">
+
+                                        @using (Html.BeginForm("BilgiGuncelle", "CariPanel", FormMethod.Post))
+                                        {
+                                            @Html.HiddenFor(x => x.Cari.Id)
+                                            <div class="form-group row">
+                                                @Html.LabelFor(x => x.Cari.Ad, new { @class = "col-sm-2 col-form-label" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(x => x.Cari.Ad, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(x => x.Cari.Soyad, new { @class = "col-sm-2 col-form-label" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(x => x.Cari.Soyad, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(x => x.Cari.Sehir, new { @class = "col-sm-2 col-form-label" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(x => x.Cari.Sehir, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(x => x.Cari.Eposta, new { @class = "col-sm-2 col-form-label" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(x => x.Cari.Eposta, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="offset-sm-2 col-sm-10">
+                                                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                </div>
+                                <!-- /.tab-content -->
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.nav-tabs-custom -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    <script src="~/AdminLTE-3.0.4/plugins/jquery/jquery.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/AdminLTE-3.0.4/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/AdminLTE-3.0.4/dist/js/demo.js"></script>
+
+    @if (TempData["BilgiGuncelleSuccess"] != null)
+    {
+        <script>
+    // Sayfa yüklendikten sonra JavaScript kodunu çalıştırın
+    $(document).ready(function () {
+        document.getElementById('hesapAyarlari').click();
+    });
+        </script>
+    }
+</body>
+</html>

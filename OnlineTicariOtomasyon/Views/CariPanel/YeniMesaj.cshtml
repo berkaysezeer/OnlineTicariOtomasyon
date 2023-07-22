@@ -1,0 +1,105 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model Mesaj
+@{
+    ViewBag.Title = "Yeni Mesaj";
+    Layout = "~/Views/Shared/_CariPanelLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ticari Otomasyon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/dist/css/adminlte.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+
+    <div class="container-fluid">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Mesajlar</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content">
+            <div class="row">
+                @Html.Action("PartialMesajlarMenu", "CariPanel")
+                <div class="col-md-9">
+                    <!-- /.col -->
+                    @using (Html.BeginForm("YeniMesaj", "CariPanel", FormMethod.Post))
+                    {<div class="card card-primary card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">Yeni Mesaj</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    @Html.DropDownList("CariId", (IEnumerable<SelectListItem>)ViewBag.CariListesi, "Seçiniz", new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => x.Konu, "", new { @class = "form-control", @placeholder = "Konu:" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextAreaFor(x => x.Icerik, new { @class = "form-control", @style = "height: 300px" })
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right">
+                                    <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Gönder</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="~/AdminLTE-3.0.4/plugins/jquery/jquery.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/dist/js/adminlte.min.js"></script>
+    <script>
+        $(function () {
+            //Enable check and uncheck all functionality
+            $('.checkbox-toggle').click(function () {
+                var clicks = $(this).data('clicks')
+                if (clicks) {
+                    //Uncheck all checkboxes
+                    $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
+                    $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
+                } else {
+                    //Check all checkboxes
+                    $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
+                    $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
+                }
+                $(this).data('clicks', !clicks)
+            })
+            //Handle starring for glyphicon and font awesome
+            $('.mailbox-star').click(function (e) {
+                e.preventDefault()
+                //detect type
+                var $this = $(this).find('a > i')
+                var glyph = $this.hasClass('glyphicon')
+                var fa = $this.hasClass('fa')
+                //Switch states
+                if (glyph) {
+                    $this.toggleClass('glyphicon-star')
+                    $this.toggleClass('glyphicon-star-empty')
+                }
+                if (fa) {
+                    $this.toggleClass('fa-star')
+                    $this.toggleClass('fa-star-o')
+                }
+            })
+        })</script>
+    <script src="~/AdminLTE-3.0.4/dist/js/demo.js"></script>
+</body>
+</html>

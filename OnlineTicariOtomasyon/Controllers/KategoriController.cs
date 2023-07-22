@@ -13,7 +13,7 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
 
-        [Authorize]
+        
         public ActionResult Index()
         {
             var kategoriler = db.Kategoris
@@ -24,7 +24,7 @@ namespace OnlineTicariOtomasyon.Controllers
             return View(kategoriler);
         }
 
-        [Authorize]
+        
         public ActionResult PageIndex(int? s, string p)
         {
             var kategoriler = db.Kategoris
@@ -36,7 +36,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        
         public ActionResult Ekle()
         {
             return View();
@@ -57,7 +57,7 @@ namespace OnlineTicariOtomasyon.Controllers
             else return View();
         }
 
-        [Authorize]
+        
         public ActionResult Sil(int Id)
         {
             var kategori = db.Kategoris.FirstOrDefault(x => x.Id == Id);
@@ -74,7 +74,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        
         public ActionResult Duzenle(int Id)
         {
             var kategori = db.Kategoris.FirstOrDefault(x => x.Id == Id);

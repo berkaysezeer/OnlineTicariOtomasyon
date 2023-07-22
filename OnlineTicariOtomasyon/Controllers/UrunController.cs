@@ -7,11 +7,12 @@ using System.Web.Mvc;
 
 namespace OnlineTicariOtomasyon.Controllers
 {
+    [Authorize(Roles = "Personel")]
     public class UrunController : Controller
     {
         Context db = new Context();
 
-        [Authorize]
+
         public ActionResult Index()
         {
             ViewBag.CariListesi = Functions.DropdownListItems.Cari();
@@ -21,7 +22,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+
         public ActionResult Ekle()
         {
             ViewBag.KategoriListesi = Functions.DropdownListItems.Kategori();
@@ -32,13 +33,36 @@ namespace OnlineTicariOtomasyon.Controllers
         [HttpPost]
         public ActionResult Ekle(Urun urun)
         {
-            db.Uruns.Add(urun);
-            db.SaveChanges();
-            TempData["UrunSuccess"] = $"{urun.Ad} başarıyla eklendi";
-            return RedirectToAction("Index");
+            if (Request.Files.Count > 0)
+            {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.KategoriListesi = Functions.DropdownListItems.Kategori();
+                    ViewBag.MarkaListesi = Functions.DropdownListItems.Marka();
+                    return View();
+                }
+                else
+                {
+                    string guid = Guid.NewGuid().ToString();
+                    urun.Guid = guid;
+                    urun.UrunGorsel = Functions.GorselKaydet.UrunGorselKaydet(Request, Server, guid);
+                    db.Uruns.Add(urun);
+                    db.SaveChanges();
+                    TempData["UrunSuccess"] = $"{urun.Ad} başarıyla eklendi";
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                ViewBag.KategoriListesi = Functions.DropdownListItems.Kategori();
+                ViewBag.MarkaListesi = Functions.DropdownListItems.Marka();
+                return View();
+            }
+
+
         }
 
-        [Authorize]
+
         public ActionResult Sil(int Id)
         {
             var urun = db.Uruns.FirstOrDefault(x => x.Id == Id);
@@ -55,7 +79,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+
         public ActionResult Duzenle(int Id)
         {
             var urun = db.Uruns.FirstOrDefault(x => x.Id == Id);
@@ -76,10 +100,11 @@ namespace OnlineTicariOtomasyon.Controllers
 
             if (urun != null)
             {
+                if (Request.Files.Count > 0) urun.UrunGorsel = Functions.GorselKaydet.UrunGorselKaydet(Request, Server, urun.Guid);
+
                 urun.Ad = u.Ad;
                 urun.AlisFiyati = u.AlisFiyati;
                 urun.SatisFiyati = u.SatisFiyati;
-                urun.UrunGorsel = u.UrunGorsel;
                 urun.KategoriId = u.KategoriId;
                 urun.MarkaId = u.MarkaId;
                 urun.Stok = u.Stok;
@@ -122,10 +147,14 @@ namespace OnlineTicariOtomasyon.Controllers
                         string takipKodu = Functions.KargoIslemleri.TakipKoduUret();
                         DateTime tarih = DateTime.Now;
 
+                        string url = $"https://localhost:44326/Kargo/KargoDetay/{takipKodu}";
+                        string dosyaYolu = Functions.KargoIslemleri.QrKodOlustur(url, takipKodu, Server);
+
                         var kargoDurum = db.KargoDurums.FirstOrDefault(x => x.Id == 1);
 
                         Kargo kargo = new Kargo()
                         {
+                            QrKodDosyaYolu = dosyaYolu,
                             KargoDurum = kargoDurum,
                             Tarih = tarih,
                             TahminiTeslimat = tarih.AddDays(2),

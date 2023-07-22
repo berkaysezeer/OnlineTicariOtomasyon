@@ -10,12 +10,15 @@ namespace OnlineTicariOtomasyon.Models
     public class Urun
     {
         public int Id { get; set; }
+
         [Column(TypeName = "Varchar")]
-        [StringLength(100)]
+        [Required]
+        [StringLength(100, ErrorMessage = "En fazla 100 karakter girebilirsiniz")]
         public string Ad { get; set; }
 
         [Column(TypeName = "Varchar")]
-        [StringLength(200)]
+        [Required]
+        [StringLength(250, ErrorMessage = "En fazla 250 karakter girebilirsiniz")]
         public string Aciklama { get; set; }
 
         public short Stok { get; set; }
@@ -30,8 +33,13 @@ namespace OnlineTicariOtomasyon.Models
         }
 
         [Column(TypeName = "Varchar")]
-        [StringLength(255)]
+        [StringLength(255, ErrorMessage = "En fazla 255 karakter girebilirsiniz")]
         public string UrunGorsel { get; set; }
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(50)]
+        public string Guid { get; set; }
+
         public int KategoriId { get; set; }
         public virtual Kategori Kategori { get; set; }
         public int MarkaId { get; set; }

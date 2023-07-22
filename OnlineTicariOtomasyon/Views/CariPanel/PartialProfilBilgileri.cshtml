@@ -1,0 +1,57 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model Cari
+<div class="col-md-3">
+    <!-- Profile Image -->
+    <div class="card card-primary card-outline">
+        <div class="card-body box-profile">
+            <div class="text-center">
+                <img class="profile-user-img img-fluid img-circle" src="@Model.Gorsel" alt="User profile picture">
+            </div>
+            <h3 class="profile-username text-center">@Model.Ad @Model.Soyad</h3>
+            <p class="text-muted text-center">@Model.Eposta</p>
+            <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                    <b>Satış Sayısı</b>
+                    <a class="float-right">@ViewBag.SatisSayisi</a>
+                </li>
+                <li class="list-group-item">
+                    <b>Toplam Ödeme</b>
+                    <a class="float-right">@ViewBag.ToplamOdeme</a>
+                </li>
+                <li class="list-group-item">
+                    <b>Toplam Ürün Sayısı</b>
+                    <a class="float-right">@ViewBag.ToplamUrunSayisi</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+    <!-- About Me Box -->
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Hakkımda</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <strong>
+                <i class="fas fa-book mr-1"></i> Meslek
+            </strong>
+            <p class="text-muted"> @Model.Meslek</p>
+            <hr>
+            <strong>
+                <i class="fas fa-map-marker-alt mr-1"></i> Şehir
+            </strong>
+            <p class="text-muted">@Model.Sehir</p>
+            <hr>
+            <strong>
+                <i class="fas fa-pencil-alt mr-1"></i> Cep Telefonu
+            </strong>
+            <p class="text-muted">
+                @Model.CepTelefonu
+            </p>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>

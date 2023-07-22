@@ -1,0 +1,40 @@
+﻿@using OnlineTicariOtomasyon.Models
+@model List<Kargo>
+@{
+    ViewBag.Title = "Kargolar";
+    Layout = "~/Views/Shared/_CariPanelLayout.cshtml";
+}
+
+<div class="row mt-5">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Takip Numarası</th>
+                    <th>Durum</th>
+                    <th>Ürün</th>
+                    <th>Personel</th>
+                    <th>Tarih</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var kargo in Model)
+                {
+                    <tr>
+                        <td>@kargo.TakipKodu</td>
+                        <td>@kargo.KargoDurum.Durum</td>
+                        <td>@kargo.SatisHareket.Urun.Ad</td>
+                        <td>@kargo.SatisHareket.Personel.Ad @kargo.SatisHareket.Personel.Soyad</td>
+                        <td>@kargo.Tarih.ToString("dd.MM.yyy HH:mm")</td>
+                        <td>
+                            <a href="/CariPanel/KargoDetay/@kargo.TakipKodu" class="btn btn-outline-info">Detay</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

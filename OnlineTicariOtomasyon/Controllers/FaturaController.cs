@@ -12,7 +12,7 @@ namespace OnlineTicariOtomasyon.Controllers
         Context db = new Context();
         // GET: Fatura
 
-        [Authorize]
+        
         public ActionResult Index()
         {
             var faturalar = db.Faturas.ToList();
@@ -20,7 +20,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        
         public ActionResult Ekle()
         {
             return View();
@@ -43,7 +43,7 @@ namespace OnlineTicariOtomasyon.Controllers
             else return View();
         }
 
-        [Authorize]
+        
         public ActionResult Detay(int Id)
         {
             var fatura = db.Faturas.Where(x => x.Id == Id).FirstOrDefault();
@@ -60,7 +60,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        
         public ActionResult Duzenle(int Id)
         {
             var fatura = db.Faturas.Where(x => x.Id == Id).FirstOrDefault();
@@ -99,7 +99,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        
         public ActionResult KalemEkle(int? Id)
         {
             if (Id == null || Id == 0) return RedirectToAction("Index");
