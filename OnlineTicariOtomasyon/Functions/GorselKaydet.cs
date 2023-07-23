@@ -13,7 +13,21 @@ namespace OnlineTicariOtomasyon.Functions
         {
             string dosyaAdi = $"{guid}";
             string uzanti = Path.GetExtension(Request.Files[0].FileName);
+            if (string.IsNullOrEmpty(uzanti)) return "";
+
             string dosyaYolu = $"/Images/Personel/{dosyaAdi}{uzanti}";
+            Request.Files[0].SaveAs(Server.MapPath(dosyaYolu));
+
+            return dosyaYolu;
+        }
+
+        public static string CariGorselKaydet(HttpRequestBase Request, HttpServerUtilityBase Server, string guid)
+        {
+            string dosyaAdi = $"{guid}";
+            string uzanti = Path.GetExtension(Request.Files[0].FileName);
+            if (string.IsNullOrEmpty(uzanti)) return "";
+
+            string dosyaYolu = $"/Images/Cari/{dosyaAdi}{uzanti}";
             Request.Files[0].SaveAs(Server.MapPath(dosyaYolu));
 
             return dosyaYolu;

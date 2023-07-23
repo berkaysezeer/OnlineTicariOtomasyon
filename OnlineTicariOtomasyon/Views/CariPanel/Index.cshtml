@@ -45,6 +45,16 @@
                                 </button>
                             </div>
                         }
+
+                        @if (TempData["PaylasimSil"] != null)
+                        {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                @TempData["PaylasimSil"].ToString()
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -54,7 +64,7 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                   @Html.Action("PartialProfilBilgileri","CariPanel")
+                    @Html.Action("PartialProfilBilgileri", "CariPanel")
                     <!-- /.col -->
                     <div class="col-md-9">
                         <div class="card">
@@ -84,8 +94,6 @@
                                             </p>
                                         }
 
-
-
                                         @foreach (var paylasim in Model.Paylasims)
                                         {
                                             <div class="post mt-3">
@@ -93,7 +101,7 @@
                                                     <img class="img-circle img-bordered-sm" src="@paylasim.Cari.Gorsel" alt="user image">
                                                     <span class="username">
                                                         <a href="#">@paylasim.Cari.Ad @paylasim.Cari.Soyad</a>
-                                                        <a href="#" class="float-right btn-tool">
+                                                        <a href="#" class="float-right btn-tool btnPaylasimSil" data-paylasim="@paylasim.Id">
                                                             <i class="fas fa-times"></i>
                                                         </a>
                                                     </span>
@@ -175,11 +183,47 @@
     @if (TempData["BilgiGuncelleSuccess"] != null)
     {
         <script>
-    // Sayfa yüklendikten sonra JavaScript kodunu çalıştırın
-    $(document).ready(function () {
-        document.getElementById('hesapAyarlari').click();
-    });
+            // Sayfa yüklendikten sonra JavaScript kodunu çalıştırın
+            $(document).ready(function () {
+                document.getElementById('hesapAyarlari').click();
+            });
         </script>
     }
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", ".btnPaylasimSil", OpenSilModal);
+    });
+
+    function OpenSilModal() {
+        var paylasimId = $(this).data("paylasim");
+        $('#Id').val(paylasimId)
+        $("#modalPaylasimSil").modal();
+    }
+</script>
+
+<div class="modal fade" id="modalPaylasimSil" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Uyarı! Paylaşım Sililecek</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modalKonu">Paylaşım silinecek. Onaylıyor musunuz?</p>
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("PaylasimSil", "CariPanel", FormMethod.Post))
+                {
+                    @Html.Hidden("Id")
+                    <button type="submit" class="btn btn-primary">Onay</button>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

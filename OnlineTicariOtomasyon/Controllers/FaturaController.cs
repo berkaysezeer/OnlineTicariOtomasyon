@@ -11,8 +11,6 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
         // GET: Fatura
-
-        
         public ActionResult Index()
         {
             var faturalar = db.Faturas.ToList();

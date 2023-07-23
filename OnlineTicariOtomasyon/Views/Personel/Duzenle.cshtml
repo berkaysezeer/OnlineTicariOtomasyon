@@ -11,6 +11,19 @@
         <li class="breadcrumb-item"><a href="/Personel/Index">Personel</a></li>
         <li class="breadcrumb-item active">@ViewBag.PersonelBilgisi </li>
     </ol>
+    @if (TempData["DangerPersonel"] != null)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    @TempData["DangerPersonel"].ToString()
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
     <div class="row">
         <div class="col-md-6">
             <div class="card mb-4">
@@ -19,18 +32,37 @@
 
                     @using (Html.BeginForm("Duzenle", "Personel", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
-                        @Html.HiddenFor(x=>x.Id)
+                        @Html.HiddenFor(x => x.Id)
 
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 @Html.LabelFor(x => x.Ad, "Ad", new { @class = "small mb-1" })
                                 @Html.TextBoxFor(x => x.Ad, new { @class = "form-control py-3" })
                                 @Html.ValidationMessageFor(x => x.Ad, "", new { @class = "small", @style = "color:red" })
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 @Html.LabelFor(x => x.Soyad, "Soyad", new { @class = "small mb-1" })
                                 @Html.TextBoxFor(x => x.Soyad, new { @class = "form-control py-3" })
                                 @Html.ValidationMessageFor(x => x.Soyad, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(x => x.Eposta, "E-posta", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.Eposta, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.Eposta, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.CepTelefonu, "Cep Telefonu", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.CepTelefonu, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.CepTelefonu, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.Adres, "Adres", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.Adres, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.Adres, "", new { @class = "small", @style = "color:red" })
                             </div>
                             <div class="form-group col-md-4">
                                 @Html.LabelFor(x => x.DepartmanId, "Departman", new { @class = "small mb-1" })
@@ -54,7 +86,7 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group mt-4 mb-0">
-                                    <button class="btn btn-primary btn-block" type="submit">Ekle</button>
+                                    <button class="btn btn-primary btn-block" type="submit">Kaydet</button>
                                 </div>
                             </div>
                         </div>}

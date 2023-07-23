@@ -45,7 +45,11 @@ namespace OnlineTicariOtomasyon.Models
 
         [Column(TypeName = "Varchar")]
         [StringLength(10)]
-        public string Yetki { get; set; } = "Personel";
+        public string Yetki { get; set; } = "Cari";
+
+        [Column(TypeName = "Varchar")]
+        [StringLength(50)]
+        public string Guid { get; set; }
 
         public Cari()
         {

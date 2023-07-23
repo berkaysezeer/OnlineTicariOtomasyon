@@ -9,6 +9,7 @@ using PagedList.Mvc;
 
 namespace OnlineTicariOtomasyon.Controllers
 {
+    [Authorize(Roles = "Yönetici")]
     public class KategoriController : Controller
     {
         Context db = new Context();

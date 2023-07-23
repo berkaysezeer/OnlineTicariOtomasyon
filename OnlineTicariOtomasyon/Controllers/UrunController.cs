@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace OnlineTicariOtomasyon.Controllers
 {
-    [Authorize(Roles = "Personel")]
+    [Authorize(Roles = "Personel,Yönetici")]
     public class UrunController : Controller
     {
         Context db = new Context();

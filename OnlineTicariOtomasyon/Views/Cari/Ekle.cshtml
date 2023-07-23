@@ -10,13 +10,26 @@
         <li class="breadcrumb-item"><a href="/Urun/Index">Ürün</a></li>
         <li class="breadcrumb-item active">Yeni Ürün Ekle</li>
     </ol>
+    @if (TempData["DangerCari"] != null)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    @TempData["DangerCari"].ToString()
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
     <div class="row">
         <div class="col-md-6">
             <div class="card mb-4">
                 <div class="card-header"><i class="fas fa-table mr-1"></i>Kategori</div>
                 <div class="card-body">
 
-                    @using (Html.BeginForm("Ekle", "Cari", FormMethod.Post))
+                    @using (Html.BeginForm("Ekle", "Cari", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -37,9 +50,37 @@
                                 @Html.ValidationMessageFor(x => x.Eposta, "", new { @class = "small", @style = "color:red" })
                             </div>
                             <div class="form-group col-md-6">
+                                @Html.LabelFor(x => x.Sifre, "Şifre", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.Sifre, new { @class = "form-control py-3", @type = "password" })
+                                @Html.ValidationMessageFor(x => x.Sifre, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.CepTelefonu, "Cep Telefonu", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.CepTelefonu, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.CepTelefonu, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.Meslek, "Meslek", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.Meslek, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.Meslek, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-4">
                                 @Html.LabelFor(x => x.Sehir, "Şehir", new { @class = "small mb-1" })
                                 @Html.TextBoxFor(x => x.Sehir, new { @class = "form-control py-3" })
                                 @Html.ValidationMessageFor(x => x.Sehir, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="Gorsel" required
+                                               aria-describedby="Gorsel" name="Gorsel">
+                                        <label class="custom-file-label" for="Gorsel">Görsel Seç</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-row">

@@ -1992,10 +1992,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\Personel\5b541cfc-d7fb-4dc6-a2ab-81919e7ec859.jpg" />
-    <Content Include="Images\Personel\5b9cf1a2-3a1c-4c04-89a8-e42b10695af4.jpg" />
-    <Content Include="Images\Personel\66743f71-1add-47bb-8412-584e533d3079.jpg" />
-    <Content Include="Images\Personel\d83e92e5-a853-4f8c-98a4-f1733ef050d4.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="thumber\bio.html" />
@@ -2423,8 +2419,6 @@
     <Content Include="AdminLTE-3.0.4\plugins\sweetalert2-theme-bootstrap-4\bootstrap-4.scss" />
     <Content Include="AdminLTE-3.0.4\plugins\toastr\toastr.js.map" />
     <Content Include="AdminLTE-3.0.4\README.md" />
-    <Content Include="Images\Personel\a822e4c7-c826-42b8-9a16-85619cb31035" />
-    <Content Include="Images\Personel\BatuhanCoşar-9" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -2687,6 +2681,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\Cari\" />
+    <Folder Include="Images\Personel\" />
     <Folder Include="Images\QrKod\" />
     <Folder Include="Images\Urun\" />
   </ItemGroup>

@@ -13,14 +13,14 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
 
-        
+
         public ActionResult Index()
         {
             int cariId = Convert.ToInt32(Session["CariId"]);
             var cari = db.Caris.FirstOrDefault(x => x.Id == cariId);
             ViewBag.CariBilgisi = $"{cari.Ad} {cari.Soyad}";
 
-            var paylasimlar = db.Paylasims.Where(x => x.CariId == cariId && x.Sil == false).OrderByDescending(x=>x.Tarih).ToList();
+            var paylasimlar = db.Paylasims.Where(x => x.CariId == cariId && x.Sil == false).OrderByDescending(x => x.Tarih).ToList();
 
             CariPaylasimViewModel viewModel = new CariPaylasimViewModel()
             {
@@ -32,7 +32,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        
+
         public ActionResult Profil()
         {
             int cariId = Convert.ToInt32(Session["CariId"]);
@@ -67,7 +67,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        
+
         public ActionResult Siparisler()
         {
             int cariId = Convert.ToInt32(Session["CariId"]);
@@ -77,7 +77,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        
+
         public ActionResult Mesajlar(string f)
         {
             int cariId = Convert.ToInt32(Session["CariId"]);
@@ -91,7 +91,7 @@ namespace OnlineTicariOtomasyon.Controllers
             return View(mesajlar);
         }
 
-        
+
         public PartialViewResult PartialMesajlarMenu()
         {
             int cariId = Convert.ToInt32(Session["CariId"]);
@@ -130,7 +130,7 @@ namespace OnlineTicariOtomasyon.Controllers
 
         }
 
-        
+
         [HttpPost]
         public ActionResult MesajSil(int Id)
         {
@@ -147,7 +147,7 @@ namespace OnlineTicariOtomasyon.Controllers
             return RedirectToAction("Mesajlar");
         }
 
-        
+
         [HttpGet]
         public ActionResult YeniMesaj()
         {
@@ -155,7 +155,7 @@ namespace OnlineTicariOtomasyon.Controllers
             return View();
         }
 
-        
+
         [HttpPost]
         public ActionResult YeniMesaj(Mesaj mesaj, int CariId)
         {
@@ -183,7 +183,7 @@ namespace OnlineTicariOtomasyon.Controllers
             return RedirectToAction("Index", "Login");
         }
 
-        
+
         [HttpGet]
         public ActionResult Kargolar()
         {
@@ -194,7 +194,7 @@ namespace OnlineTicariOtomasyon.Controllers
             return View(kargolar);
         }
 
-        
+
         [HttpGet]
         public ActionResult KargoDetay(string Id)
         {
@@ -202,7 +202,7 @@ namespace OnlineTicariOtomasyon.Controllers
             return View(kargo);
         }
 
-        
+
         [HttpPost]
         public ActionResult PaylasimYap(CariPaylasimViewModel viewModel)
         {
@@ -214,7 +214,7 @@ namespace OnlineTicariOtomasyon.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
- 
+
         public PartialViewResult PartialProfilBilgileri()
         {
             int cariId = Convert.ToInt32(Session["CariId"]);
@@ -234,5 +234,14 @@ namespace OnlineTicariOtomasyon.Controllers
             return View(duyurular);
         }
 
+        [HttpPost]
+        public ActionResult PaylasimSil(int Id)
+        {
+            var paylasim = db.Paylasims.FirstOrDefault(x => x.Id == Id);
+            paylasim.Sil = true;
+            db.SaveChanges();
+            TempData["PaylasimSil"] = "Paylaşım silindi.";
+            return RedirectToAction("Index");
+        }
     }
 }

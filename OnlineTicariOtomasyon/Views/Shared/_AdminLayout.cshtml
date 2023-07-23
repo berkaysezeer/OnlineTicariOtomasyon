@@ -64,12 +64,16 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">YÖNETİM PANELİ</div>
-                        <a class="nav-link" href="/Kategori">
-                            <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
-                            Kategoriler
-                        </a>
+
+                        @if (User.IsInRole("Yönetici"))
+                        {
+            <a class="nav-link" href="/Kategori">
+                <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                Kategoriler
+            </a>}
+
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#urun" aria-expanded="false" aria-controls="urun">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-store"></i></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-store"></i></div>
                             Ürünler
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
@@ -85,18 +89,29 @@
                                 </a>
                             </nav>
                         </div>
-                        <a class="nav-link" href="/Departman">
-                            <div class="sb-nav-link-icon"><i class="fas fa-list-alt"></i></div>
-                            Departmanlar
-                        </a>
+
+                        @if (User.IsInRole("Yönetici"))
+                        {
+
+            <a class="nav-link" href="/Departman">
+                <div class="sb-nav-link-icon"><i class="fas fa-list-alt"></i></div>
+                Departmanlar
+            </a>}
+
+
                         <a class="nav-link" href="/Cari">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-circle-user"></i></div>
                             Cariler
                         </a>
-                        <a class="nav-link" href="/Personel">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            Personeller
-                        </a>
+
+                        @if (User.IsInRole("Yönetici"))
+                        {
+            <a class="nav-link" href="/Personel">
+                <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                Personeller
+            </a>}
+
+
                         <a class="nav-link" href="/Duyuru">
                             <div class="sb-nav-link-icon"> <i class="fa-solid fa-scroll"></i></div>
                             Duyurular
@@ -137,12 +152,7 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2019</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
+                        <div class="text-muted">Copyright &copy; Online Ticari Otomasyon 2023</div>
                     </div>
                 </div>
             </footer>

@@ -1,4 +1,5 @@
-﻿using OnlineTicariOtomasyon.Models;
+﻿using OnlineTicariOtomasyon.Functions;
+using OnlineTicariOtomasyon.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace OnlineTicariOtomasyon.Controllers
     {
         Context db = new Context();
         // GET: Vari
-        
+
         public ActionResult Index()
         {
             var cariler = db.Caris.Where(x => x.Sil == false).OrderBy(x => x.Ad).ToList();
@@ -20,7 +21,7 @@ namespace OnlineTicariOtomasyon.Controllers
 
 
         [HttpGet]
-        
+
         public ActionResult Ekle()
         {
             return View();
@@ -29,19 +30,52 @@ namespace OnlineTicariOtomasyon.Controllers
         [HttpPost]
         public ActionResult Ekle(Cari cari)
         {
-            if (cari != null)
+            if (Request.Files.Count > 0)
             {
-                db.Caris.Add(cari);
-                db.SaveChanges();
+                if (cari != null)
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        return View();
+                    }
+                    else
+                    {
+                        if (db.Caris.FirstOrDefault(x => x.Sil == false && x.Eposta == cari.Eposta) is null)
+                        {
+                            string guid = Guid.NewGuid().ToString();
+                            cari.Guid = guid;
+                            cari.Gorsel = GorselKaydet.CariGorselKaydet(Request, Server, guid);
+                            string encSifre = DataSecurity.Encrypt(cari.Sifre);
+                            cari.Sifre = encSifre;
 
-                TempData["CariSuccess"] = $"{cari.Ad} {cari.Soyad} başarıyla eklendi";
+                            db.Caris.Add(cari);
+                            db.SaveChanges();
 
-                return RedirectToAction("Index");
+                            TempData["CariSuccess"] = $"{cari.Ad} {cari.Soyad} başarıyla eklendi";
+
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            TempData["DangerCari"] = "Girilen müşteri kaydı sistemde kayıtlı";
+                            return View();
+                        }
+                    }
+                }
+                else
+                {
+                    ViewBag.DepartmanListesi = DropdownListItems.Departman();
+                    return View();
+                }
             }
-            else return View();
+            else
+            {
+                ViewBag.DepartmanListesi = DropdownListItems.Departman();
+                return View();
+            }
         }
 
-        
+
         public ActionResult Sil(int Id)
         {
             var cari = db.Caris.Where(x => x.Id == Id).FirstOrDefault();
@@ -57,7 +91,7 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpGet]
-        
+
         public ActionResult Duzenle(int Id)
         {
             var cari = db.Caris.FirstOrDefault(x => x.Id == Id);
@@ -74,27 +108,43 @@ namespace OnlineTicariOtomasyon.Controllers
 
             if (cari != null)
             {
-                if (!ModelState.IsValid) return View(cari);
+                if (!ModelState.IsValid)
+                    return View(cari);
                 else
                 {
-                    cari.Ad = c.Ad;
-                    cari.Soyad = c.Soyad;
-                    cari.Eposta = c.Eposta;
-                    cari.Sehir = c.Sehir;
+                    if (db.Caris.FirstOrDefault(x => x.Sil == false && x.Eposta == c.Eposta) is null || c.Eposta == cari.Eposta)
+                    {
+                        if (Request.Files.Count > 0)
+                        {
+                            string gorsel = GorselKaydet.CariGorselKaydet(Request, Server, cari.Guid);
+                            if (!string.IsNullOrEmpty(gorsel)) cari.Gorsel = gorsel;
+                        }
 
-                    db.SaveChanges();
+                        cari.Ad = c.Ad;
+                        cari.Soyad = c.Soyad;
+                        cari.Eposta = c.Eposta;
+                        cari.CepTelefonu = c.CepTelefonu;
+                        cari.Meslek = c.Meslek;
+                        cari.Sehir = c.Sehir;
 
-                    TempData["CariSuccess"] = $"{c.Ad} {c.Soyad} başarıyla düzenlendi";
+                        db.SaveChanges();
 
-                    return RedirectToAction("Index");
+                        TempData["CariSuccess"] = $"{c.Ad} {c.Soyad} başarıyla düzenlendi";
+
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["DangerCari"] = "Girilen müşteri kaydı sistemde kayıtlı";
+                        return View(cari);
+                    }
                 }
-
             }
-            else return View("Index");
+            else return RedirectToAction("Index");
         }
 
         [HttpGet]
-        
+
         public ActionResult CariSatis(int Id)
         {
             var cari = db.Caris.Where(x => x.Id == Id).Select(x => x.Ad + " " + x.Soyad).FirstOrDefault();

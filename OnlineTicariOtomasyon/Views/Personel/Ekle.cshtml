@@ -11,6 +11,20 @@
         <li class="breadcrumb-item"><a href="/Personel/Index">Personel</a></li>
         <li class="breadcrumb-item active">Yeni Personel Ekle</li>
     </ol>
+    @if (TempData["DangerPersonel"] != null)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    @TempData["DangerPersonel"].ToString()
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
     <div class="row">
         <div class="col-md-6">
             <div class="card mb-4">
@@ -39,12 +53,22 @@
                             </div>
                             <div class="form-group col-md-6">
                                 @Html.LabelFor(x => x.Sifre, "Şifre", new { @class = "small mb-1" })
-                                @Html.TextBoxFor(x => x.Sifre, new { @class = "form-control py-3", @type="password" })
+                                @Html.TextBoxFor(x => x.Sifre, new { @class = "form-control py-3", @type = "password" })
                                 @Html.ValidationMessageFor(x => x.Sifre, "", new { @class = "small", @style = "color:red" })
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.CepTelefonu, "Cep Telefonu", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.CepTelefonu, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.CepTelefonu, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(x => x.Adres, "Adres", new { @class = "small mb-1" })
+                                @Html.TextBoxFor(x => x.Adres, new { @class = "form-control py-3" })
+                                @Html.ValidationMessageFor(x => x.Adres, "", new { @class = "small", @style = "color:red" })
+                            </div>
+                            <div class="form-group col-md-4">
                                 @Html.LabelFor(x => x.DepartmanId, "Departman", new { @class = "small mb-1" })
                                 @Html.DropDownList("DepartmanId", (IEnumerable<SelectListItem>)ViewBag.DepartmanListesi, new { @class = "form-control" })
                             </div>

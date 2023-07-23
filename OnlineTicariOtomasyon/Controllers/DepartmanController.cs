@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace OnlineTicariOtomasyon.Controllers
 {
+    [Authorize(Roles = "Yönetici")]
     public class DepartmanController : Controller
     {
         // GET: Departman

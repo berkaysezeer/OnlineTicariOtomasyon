@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace OnlineTicariOtomasyon.Controllers
 {
+    [Authorize(Roles = "Yönetici")]
     public class PersonelController : Controller
     {
         Context db = new Context();
@@ -42,18 +43,27 @@ namespace OnlineTicariOtomasyon.Controllers
                     }
                     else
                     {
-                        string guid = Guid.NewGuid().ToString();
-                        personel.Guid = guid;
-                        personel.Gorsel = GorselKaydet.PersonelGorselKaydet(Request, Server, guid);
-                        string encSifre = DataSecurity.Encrypt(personel.Sifre);
-                        personel.Sifre = encSifre;
+                        if (db.Personels.FirstOrDefault(x => x.Sil == false && x.Eposta == personel.Eposta) is null)
+                        {
+                            string guid = Guid.NewGuid().ToString();
+                            personel.Guid = guid;
+                            personel.Gorsel = GorselKaydet.PersonelGorselKaydet(Request, Server, guid);
+                            string encSifre = DataSecurity.Encrypt(personel.Sifre);
+                            personel.Sifre = encSifre;
 
-                        db.Personels.Add(personel);
-                        db.SaveChanges();
+                            db.Personels.Add(personel);
+                            db.SaveChanges();
 
-                        TempData["PersonelSuccess"] = $"{personel.Ad} {personel.Soyad} başarıyla eklendi";
+                            TempData["PersonelSuccess"] = $"{personel.Ad} {personel.Soyad} başarıyla eklendi";
 
-                        return RedirectToAction("Index");
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            TempData["DangerPersonel"] = "Girilen personel kaydı sistemde kayıtlı";
+                            ViewBag.DepartmanListesi = DropdownListItems.Departman();
+                            return View();
+                        }
                     }
                 }
                 else
@@ -109,16 +119,34 @@ namespace OnlineTicariOtomasyon.Controllers
                 }
                 else
                 {
-                    if (Request.Files.Count > 0) personel.Gorsel = GorselKaydet.PersonelGorselKaydet(Request, Server, personel.Guid);
+                    if (db.Personels.FirstOrDefault(x => x.Sil == false && x.Eposta == p.Eposta) is null || p.Eposta == personel.Eposta)
+                    {
+                        if (Request.Files.Count > 0)
+                        {
+                            string gorsel = GorselKaydet.PersonelGorselKaydet(Request, Server, personel.Guid);
+                            if (!string.IsNullOrEmpty(gorsel)) personel.Gorsel = gorsel;
+                        }
 
-                    personel.Ad = p.Ad;
-                    personel.Soyad = p.Soyad;
-                    personel.DepartmanId = p.DepartmanId;
-                    db.SaveChanges();
+                        personel.Ad = p.Ad;
+                        personel.Soyad = p.Soyad;
+                        personel.DepartmanId = p.DepartmanId;
+                        personel.Eposta = p.Eposta;
+                        personel.CepTelefonu = p.CepTelefonu;
+                        personel.Adres = p.Adres;
 
-                    TempData["PersonelSuccess"] = $"{personel.Ad} {personel.Soyad} başarıyla düzenlendi";
+                        db.SaveChanges();
 
-                    return RedirectToAction("Index");
+                        TempData["PersonelSuccess"] = $"{personel.Ad} {personel.Soyad} başarıyla düzenlendi";
+
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["DangerPersonel"] = "Girilen personel kaydı sistemde kayıtlı";
+                        ViewBag.DepartmanListesi = DropdownListItems.Departman();
+                        ViewBag.PersonelBilgisi = db.Personels.Where(x => x.Id == p.Id).Select(x => x.Ad + " " + x.Soyad).FirstOrDefault();
+                        return View(personel);
+                    }
                 }
             }
             else return RedirectToAction("Index");
