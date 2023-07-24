@@ -53,7 +53,7 @@
                                     {
 
                                         <a href="#" class="btn btn-primary btn-sm btnDuyuruDuzenle" data-duyuru="@duyuru.Id" data-duyurukonu="@duyuru.Konu" data-duyuruaciklama="@duyuru.Aciklama">Düzenle</a>
-                                        <a href="#" class="btn btn-danger btn-sm btnDuyuruDuzenle" data-duyuru="@duyuru.Id" data-duyurukonu="@duyuru.Konu">Sil</a>
+                                        <a href="#" class="btn btn-danger btn-sm btnDuyuruSil" data-duyuru="@duyuru.Id" data-duyurukonu="@duyuru.Konu">Sil</a>
                                     }
 
                                 </td>
@@ -83,8 +83,7 @@
         var duyuruKonu = $(this).data("duyurukonu");
 
         $('.modalKonu').html(duyuruKonu + ' konulu duyuru silinecek. Onaylıyor musunuz?');
-        $('#Id').val(duyuruId)
-
+        $('#DuyuruId').val(duyuruId)
         $("#modalDuyuruSil").modal();
     }
 
@@ -161,7 +160,7 @@
             <div class="modal-footer">
                 @using (Html.BeginForm("Sil", "Duyuru", FormMethod.Post))
                 {
-                    @Html.Hidden("Id")
+                    @Html.Hidden("DuyuruId")
                     <button type="submit" class="btn btn-primary">Onay</button>
                 }
 

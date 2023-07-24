@@ -81,7 +81,11 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    @Session["KisiBilgisi"].ToString()
+                    @if (Session["KisiBilgisi"] != null)
+                    {
+                        @Session["KisiBilgisi"].ToString()
+                    }
+
                 </div>
             </nav>
         </div>

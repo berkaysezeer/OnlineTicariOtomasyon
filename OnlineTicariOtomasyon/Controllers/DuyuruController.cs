@@ -40,9 +40,9 @@ namespace OnlineTicariOtomasyon.Controllers
         }
 
         [HttpPost]
-        public ActionResult Sil(int Id)
+        public ActionResult Sil(int DuyuruId)
         {
-            var duyuru = db.Duyurus.FirstOrDefault(x => x.Id == Id);
+            var duyuru = db.Duyurus.FirstOrDefault(x => x.Id == DuyuruId);
             duyuru.Sil = true;
             db.SaveChanges();
             TempData["DuyuruSuccess"] = $"{duyuru.Konu} konulu duyuru başarıyla silindi.";
